@@ -1,1 +1,3 @@
-Shovel Hussars
+Shovel Hussars!
+
+Ez a csapat GitHubja!
