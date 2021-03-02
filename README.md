@@ -29,7 +29,6 @@ Amit mi tervezünk:
 	A játék egy már létező fikcionális univerzumra épül, melynek már van egy jelentős követői tábora (SCP)
 	A játékosok a háttértudásuk miatt sejthetik hogy milyen ellenségekkel kell szembenézniük, viszont mégsem tudják pontosan melyik fog velük szembe jönni.
 	Nem minden ellenség legyőzhető, ami a játékost folyamatos alkalmazkodásra készteti.
-	
 	Egy statikus story mód, előre meghatározott pályával, emellett egy véletlenszerűen generált mód is.
 	Fontos a lehetetlen ellenség kombinációk megakadályozása (Pl.: ne legyen 2 ellenség egy szobában ha az egyikre nem szabad ránézni, a másikra pedig rá kell nézni).
 	Fontos hogy az SCP-univerzumhoz hűek maradjunk, viszont mégis egy élvezhető játék legyen a végeredmény, akkor is ha valaki nem töltött több száz órát SCP fájlok olvasásával.
