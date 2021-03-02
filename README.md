@@ -4,25 +4,25 @@ Az ötlet:
 Hasonló szoftverek:
 
 Binding of Isaac - 2011.09.28
-	Nagyon pozitív értékelés, a mai napig naponta 6000+ játékos
-	Véletlenszerűen generált pályák
-	Rengeteg ellenség és tárgy
-	Játékkal feloldható tartalmak
-	Halál esetén minden elveszik
-	Nagy újrajátszhatósági lehetőség
+	Nagyon pozitív értékelés, a mai napig naponta 6000+ játékos,
+	Véletlenszerűen generált pályák,
+	Rengeteg ellenség és tárgy,
+	Játékkal feloldható tartalmak,
+	Halál esetén minden elveszik,
+	Nagy újrajátszhatósági lehetőség,
 	A karakter gyengén indul gyenge ellenségek ellen és folyamatosan erősödik. A játékoson múlik hogy mennyire gyorsan.
-	Téma: Dark and gore, klausztrofóbia
+	Téma: Dark and gore, klausztrofóbia,
 	Hardware követelmények: Alacsony
 
 Hades - 2020.09.27
-	Nagyon pozitív értékelés, Napi átlagos 10000+ játékos
-	Véletlenszerű generálás
-	Sok ellenség és tárgy
-	Játék során folyamatos fejlődés
-	Halál esetén nem minden veszik el
-	Nagy újrajátszhatóság
-	A karakter gyengén indul, de jelentősen erősebbé válhat mint az ellenségek
-	Téma: Ókori görög mitológia
+	Nagyon pozitív értékelés, Napi átlagos 10000+ játékos,
+	Véletlenszerű generálás,
+	Sok ellenség és tárgy.
+	Játék során folyamatos fejlődés,
+	Halál esetén nem minden veszik el,
+	Nagy újrajátszhatóság,
+	A karakter gyengén indul, de jelentősen erősebbé válhat mint az ellenségek,
+	Téma: Ókori görög mitológia,
 	Hardware követelmények: Közepes
 
 Amit mi tervezünk:
