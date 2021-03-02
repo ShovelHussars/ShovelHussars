@@ -41,3 +41,4 @@ Amiért az ötlet működhet:
 	Emellett, az egyik legsikeresebb játék fejlesztése befejeződött a fejlesztő egészségügyi problémái miatt, tehát az igény új tartalom iránt magas.
 	A játék a kiadás után még bővíthető, akár felhasználói visszajelzés alapján is.
 	
+![kép](https://user-images.githubusercontent.com/79801028/109713678-ce897c80-7ba1-11eb-8d08-2809ebf25a8a.png)
