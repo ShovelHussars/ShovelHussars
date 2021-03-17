@@ -42,3 +42,7 @@ Amiért az ötlet működhet:
 	A játék a kiadás után még bővíthető, akár felhasználói visszajelzés alapján is.
 	
 ![kép](https://user-images.githubusercontent.com/79801028/109713678-ce897c80-7ba1-11eb-8d08-2809ebf25a8a.png)
+![unknown](https://user-images.githubusercontent.com/79801028/111447998-4b723580-870e-11eb-9f16-c7e26cbd4260.png)
+![unknown1](https://user-images.githubusercontent.com/79801028/111448036-56c56100-870e-11eb-8ad1-1ea5ed594db9.png)
+![Beallitasok_modositasa](https://user-images.githubusercontent.com/79801028/111448074-5e850580-870e-11eb-862a-1d937ce6afa4.png)
+![VisszKul](https://user-images.githubusercontent.com/79801028/111448153-69d83100-870e-11eb-893f-168de009a05e.png)
