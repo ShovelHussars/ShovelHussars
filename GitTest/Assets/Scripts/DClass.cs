@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class DClass : MonoBehaviour
 {
-    
+    private Animator anim;
     // Start is called before the first frame update
     void Start()
     {
-        
+        anim = GetComponent<Animator>();
     }
-
     private void OnCollisionEnter(Collision collision)
     {
         transform.Translate(Vector3.zero);
@@ -18,6 +17,7 @@ public class DClass : MonoBehaviour
 
     private void Update()
     {
+        
         if (Input.GetKey(KeyCode.A))
         {
             transform.rotation = Quaternion.Euler(0F, 180F, 0F);
@@ -27,10 +27,16 @@ public class DClass : MonoBehaviour
             transform.rotation = Quaternion.Euler(0F, 0F, 0F);
         }
 
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.S))
+        {
+            anim.SetBool("isRunning", true);
+        }else
+        {
+            anim.SetBool("isRunning", false);
+        }
     }
     void FixedUpdate()
     {
-        GetComponent<Rigidbody2D>().rotation = 0;
         float speed = 0.08F;
         if (Input.GetKey(KeyCode.LeftShift))
         {
@@ -40,6 +46,7 @@ public class DClass : MonoBehaviour
         direction.x = 0F;
         direction.y = 0F;
         direction.z = 0F;
+        
         if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.W))
         {
             direction.x = speed/2;
@@ -84,6 +91,7 @@ public class DClass : MonoBehaviour
             direction.x = speed;
             transform.Translate(direction);
         }
+
 
     }
 }
