@@ -30,10 +30,10 @@ public class Guard : MonoBehaviour
     private void FixedUpdate()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        playerPosition = player.transform.position;
         anim.SetBool("isWalking", false);
         if (player != null)
         {
+            playerPosition = player.transform.position;
             distanceX = GetComponent<Rigidbody2D>().transform.position.x - playerPosition.x;
             distanceY = GetComponent<Rigidbody2D>().transform.position.y - playerPosition.y;
             print("X=" + distanceX + " Y=" + distanceY);
