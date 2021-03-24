@@ -7,7 +7,7 @@ public class Guard : MonoBehaviour
 {
     private GameObject player;
     private Vector2 playerPosition;
-    private float speed = 0.01F;
+    private float speed = 0.09F;
     private float distanceX, distanceY;
     private Vector3 direction;
     private Animator anim;
@@ -31,6 +31,7 @@ public class Guard : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         playerPosition = player.transform.position;
+        anim.SetBool("isWalking", false);
         if (player != null)
         {
             distanceX = GetComponent<Rigidbody2D>().transform.position.x - playerPosition.x;
