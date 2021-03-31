@@ -9,6 +9,8 @@ TagManager:
   - MenuCamera
   - Guard
   - Door
+  - Scientist
+  - Wall
   layers:
   - Default
   - TransparentFX
