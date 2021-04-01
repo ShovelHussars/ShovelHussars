@@ -5,7 +5,10 @@ using UnityEngine;
 
 public class Guard : MonoBehaviour
 {
-    private GameObject player;
+    private Player player;
+    private DClass[] dClasses;
+    private GameObject[] _possibleTargets;
+    private GameObject target;
     private Vector2 playerPosition;
     private float speed = 0.09F;
     private float distanceX, distanceY;
@@ -14,7 +17,7 @@ public class Guard : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        dClasses = gameObject.GetComponents<DClass>();
         direction.z = 0F;
         anim = GetComponent<Animator>();
     }
@@ -29,7 +32,7 @@ public class Guard : MonoBehaviour
 
     private void FixedUpdate()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = gameObject.GetComponent<Player>();
         anim.SetBool("isWalking", false);
         if (player != null)
         {

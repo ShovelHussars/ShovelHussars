@@ -35,7 +35,7 @@ public class Scientist : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (allGuardsDead && CollidedWitwall(collision))
+        if (CollidedWitwall(collision))
         {
             isTouchingWall = true;
         }
@@ -115,7 +115,8 @@ public class Scientist : MonoBehaviour
                 }
 
                 if ((Mathf.Abs(player.transform.position.x - transform.position.x) < 7 &&
-                Mathf.Abs(player.transform.position.y - transform.position.y) < 7))
+                Mathf.Abs(player.transform.position.y - transform.position.y) < 7)&&
+                !isTouchingWall)
                 {
                     RunFromDClass();
                 }

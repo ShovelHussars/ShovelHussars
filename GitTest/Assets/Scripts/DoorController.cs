@@ -18,7 +18,7 @@ public class DoorController : MonoBehaviour
 
     private bool CollidedWitPlayer(Collision2D collision)
     {
-        DClass player = collision.gameObject.GetComponent<DClass>();
+        Player player = collision.gameObject.GetComponent<Player>();
         if(player != null && player.tag.Equals("Player"))
         {
             return true;
