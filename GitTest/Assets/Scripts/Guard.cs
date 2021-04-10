@@ -7,8 +7,8 @@ public class Guard : MonoBehaviour
 {
     private Player player;
     private DClass[] dClasses;
-    private GameObject[] _possibleTargets;
-    private GameObject target;
+ //   private GameObject[] _possibleTargets;
+ //   private GameObject target;
     private Vector2 playerPosition;
     private float speed = 0.09F;
     private float distanceX, distanceY;
@@ -17,8 +17,9 @@ public class Guard : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        dClasses = gameObject.GetComponents<DClass>();
+        dClasses = GameObject.FindObjectsOfType<DClass>();
         direction.z = 0F;
+        player = GameObject.FindObjectOfType<Player>();
         anim = GetComponent<Animator>();
     }
 
@@ -32,7 +33,6 @@ public class Guard : MonoBehaviour
 
     private void FixedUpdate()
     {
-        player = gameObject.GetComponent<Player>();
         anim.SetBool("isWalking", false);
         if (player != null)
         {
@@ -77,6 +77,10 @@ public class Guard : MonoBehaviour
             //direction.x = 0.01F;
             //direction.y = 0.01F;
             transform.Translate(direction);
+        }
+        else
+        {
+            //print("NO PLAYER!");
         }
     }
 }

@@ -8,10 +8,12 @@ public class ZombieController : MonoBehaviour
     public float lookRadius;
 
     Transform target;
+    Player player;
 
     void Start()
     {
-        target = PlayerManager.instance.player.transform;
+        player = GameObject.FindObjectOfType<Player>();
+        target = player.transform;
     }
 
     // Update is called once per frame

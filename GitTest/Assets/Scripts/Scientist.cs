@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class Scientist : MonoBehaviour
 {
-    private GameObject[] guards;
-    private GameObject guard;
-    private GameObject player;
+    private Guard[] guards;
+    private Guard guard;
+    private Player player;
     private float _time = -1F;
     private bool spooked = false;
     private bool allGuardsDead = false;
@@ -21,8 +21,8 @@ public class Scientist : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        guards = GameObject.FindGameObjectsWithTag("Guard");
+        player = GameObject.FindObjectOfType<Player>();
+        guards = GameObject.FindObjectsOfType<Guard>();
         anim = GetComponent<Animator>();
         if (guards != null && guards.Length != 0)
         {
@@ -75,7 +75,7 @@ public class Scientist : MonoBehaviour
 
     }
 
-    private GameObject LookForGuard()
+    private Guard LookForGuard()
     {
         foreach(var guard in guards)
         {
