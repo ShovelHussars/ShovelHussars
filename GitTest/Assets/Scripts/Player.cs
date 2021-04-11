@@ -8,10 +8,12 @@ public class Player : MonoBehaviour
     public Transform attackPoint;
     public float attackRange = 0.35f;
     public LayerMask enemyLayers;
+    public Camera camera;
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>();
+        
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -42,6 +44,13 @@ public class Player : MonoBehaviour
         {
             Push();
         }
+
+        Vector3 cameraPos;
+
+        cameraPos.x = transform.position.x;
+        cameraPos.y = transform.position.y;
+        cameraPos.z = -100f;
+        camera.transform.position = cameraPos;
     }
 
     void Push()
@@ -125,6 +134,7 @@ public class Player : MonoBehaviour
             transform.Translate(direction);
         }
 
-
+        
+        
     }
 }
