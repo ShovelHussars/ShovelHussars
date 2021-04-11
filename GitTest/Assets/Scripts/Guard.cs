@@ -10,7 +10,7 @@ public class Guard : MonoBehaviour
  //   private GameObject[] _possibleTargets;
  //   private GameObject target;
     private Vector2 playerPosition;
-    private float speed = 0.09F;
+    private float speed = 0.08F;
     private float distanceX, distanceY;
     private Vector3 direction;
     private Animator anim;

@@ -5,6 +5,9 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private Animator anim;
+    public Transform attackPoint;
+    public float attackRange = 0.35f;
+    public LayerMask enemyLayers;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,7 +37,37 @@ public class Player : MonoBehaviour
         {
             anim.SetBool("isRunning", false);
         }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Push();
+        }
     }
+
+    void Push()
+    {
+        anim.SetTrigger("Push");
+
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+
+        foreach(Collider2D enemy in hitEnemies)
+        {
+            Vector2 force;
+            force.x = 20;
+            if(enemy.transform.position.x < transform.position.x)
+            {
+                force.x = -20;
+            }
+            force.y = 0;
+            enemy.GetComponent<Rigidbody2D>().AddForce(force, ForceMode2D.Impulse);
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+    }
+
     void FixedUpdate()
     {
         float speed = 0.08F;
