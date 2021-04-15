@@ -10,13 +10,19 @@ public class Guard : MonoBehaviour
  //   private GameObject[] _possibleTargets;
  //   private GameObject target;
     private Vector2 playerPosition;
+    public Transform attackPoint;
+    public Vector2 attackRange;
+    public LayerMask enemyLayers;
     private float speed = 0.08F;
     private float distanceX, distanceY;
     private Vector3 direction;
     private Animator anim;
+    public float Maxhealth = 100f;
+    private float currenthealth;
     // Start is called before the first frame update
     void Start()
     {
+        currenthealth = Maxhealth;
         dClasses = GameObject.FindObjectsOfType<DClass>();
         direction.z = 0F;
         player = GameObject.FindObjectOfType<Player>();
@@ -26,9 +32,36 @@ public class Guard : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(currenthealth <= 0)
+        {
+            Die();
+        }
 
-        
+        Attack();
+    }
+
+    private void Attack()
+    {
+        Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackPoint.position, attackRange, 0f, enemyLayers);
+
+        hitEnemies[0].GetComponent<Player>().takeDamage(50f);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireCube(attackPoint.position, attackRange);
+    }
+
+    private void Die()
+    {
+        this.enabled = false;
+        anim.SetBool("isWalking", false);
+        transform.rotation = Quaternion.Euler(0f, 0f, 90f);
+    }
+
+    public void takeDamage(float damage)
+    {
+        currenthealth -= damage;
     }
 
     private void FixedUpdate()

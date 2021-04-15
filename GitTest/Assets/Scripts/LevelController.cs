@@ -41,7 +41,7 @@ public class LevelController : MonoBehaviour
             {
                 if (enemy.gameObject.activeSelf)
                 {
-                    print("false");
+                    //print("false");
                     return false;
                 }
             }
