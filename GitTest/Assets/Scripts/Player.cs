@@ -2,6 +2,7 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class Player : MonoBehaviour
     private static float currentHealth;
     public Camera mainCamera;
     private static CinemachineVirtualCamera virtualCamera;
+    public GameObject deathScreen;
 
     // Start is called before the first frame update
     void Start()
@@ -79,7 +81,8 @@ public class Player : MonoBehaviour
 
     private void Die()
     {
-        GetComponent<Canvas>().enabled = true;
+        print("I'm dead");
+        deathScreen.SetActive(true);
         this.enabled = false;
     }
 

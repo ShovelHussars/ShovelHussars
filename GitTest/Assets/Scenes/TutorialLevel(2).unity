@@ -3129,6 +3129,7 @@ MonoBehaviour:
     m_Bits: 8
   maxHealth: 100
   mainCamera: {fileID: 1879395661}
+  deathScreen: {fileID: 1917392498}
 --- !u!212 &1354201834
 SpriteRenderer:
   m_ObjectHideFlags: 0

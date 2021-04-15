@@ -43,7 +43,7 @@ public class Guard : MonoBehaviour
     private void Attack()
     {
         Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackPoint.position, attackRange, 0f, enemyLayers);
-
+        if(hitEnemies.Length!=0)
         hitEnemies[0].GetComponent<Player>().takeDamage(50f);
     }
 
