@@ -9,7 +9,6 @@ public class ZombieController : Enemy
     private float attackCooldown = 5f;
     private float nextAttack = -1f;
     Transform target;
-    private Animator anim;
 
     void Start()
     {
@@ -25,6 +24,11 @@ public class ZombieController : Enemy
     {
         MovementController();
         Attack();
+
+        if(currenthealth <= 0)
+        {
+            Die(anim);
+        }
     }
 
     private void OnDrawGizmosSelected()

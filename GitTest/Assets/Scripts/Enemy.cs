@@ -9,6 +9,7 @@ public abstract class Enemy : MonoBehaviour
     public Transform attackPoint;
     public Vector2 attackRange;
     public LayerMask enemyLayers;
+    protected Animator anim;
     protected float speed = 0.08F;
     protected float distanceX, distanceY;
     protected Vector3 direction;

@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Guard : Enemy
 {
-    private Animator anim;
 
     void Start()
     {

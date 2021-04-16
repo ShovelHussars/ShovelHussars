@@ -13,7 +13,6 @@ public class Scientist : Enemy
     private bool isTouchingWall = false;
     private int guardIndex = 0;
     private Vector2 targetPosition;
-    private Animator anim;
 
     // Start is called before the first frame update
     void Start()

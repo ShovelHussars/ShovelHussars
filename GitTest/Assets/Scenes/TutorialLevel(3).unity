@@ -1783,12 +1783,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee3d127fd6802954dbcd290d5caee96a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookRadius: 2
   attackPoint: {fileID: 2079603359}
   attackRange: {x: 0.35, y: 0.5}
   enemyLayers:
     serializedVersion: 2
     m_Bits: 64
+  lookRadius: 2
 --- !u!50 &570633421
 Rigidbody2D:
   serializedVersion: 4
@@ -6346,4 +6346,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 040fab4a9a93a8a45b612593cddd9ac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nextLevel: TutorialLevel(3)
+  _nextLevel: MainMenu
