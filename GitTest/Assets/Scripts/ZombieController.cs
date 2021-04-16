@@ -6,7 +6,7 @@ public class ZombieController : Enemy
 {
     public float lookRadius;
 
-    private float attackCooldown = 5f;
+    private readonly float attackCooldown = 5f;
     private float nextAttack = -1f;
     Transform target;
 
@@ -51,7 +51,7 @@ public class ZombieController : Enemy
                 if (hitEnemies[0].enabled)
                 {
                     hitEnemies[0].GetComponent<Player>().Infect();
-                    hitEnemies[0].GetComponent<Player>().takeDamage(20f);
+                    hitEnemies[0].GetComponent<Player>().TakeDamage(20f);
                     nextAttack = currentTime + attackCooldown;
                 }
             }

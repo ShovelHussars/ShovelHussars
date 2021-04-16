@@ -15,17 +15,6 @@ public abstract class Enemy : MonoBehaviour
     protected Vector3 direction;
     protected float maxHealth = 100f;
     protected float currenthealth;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     abstract protected void Attack();
 
@@ -36,7 +25,7 @@ public abstract class Enemy : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, 0f, 90f);
     }
 
-    public void takeDamage(float damage)
+    public void TakeDamage(float damage)
     {
         currenthealth -= damage;
     }

@@ -151,7 +151,7 @@ public class Player : MonoBehaviour
 
     }
 
-    public void takeDamage(float damage)
+    public void TakeDamage(float damage)
     {
         currentHealth -= damage;
     }
@@ -195,7 +195,7 @@ public class Player : MonoBehaviour
             }
             force.y = 0;
             enemy.GetComponent<Rigidbody2D>().AddForce(force, ForceMode2D.Impulse);
-            enemy.GetComponent<Enemy>().takeDamage(50f);
+            enemy.GetComponent<Enemy>().TakeDamage(50f);
 
         }
     }
