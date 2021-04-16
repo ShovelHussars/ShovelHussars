@@ -6,12 +6,13 @@ public class Escape : MonoBehaviour
 {
     public GameObject escMenu;
     public static bool GameIsPaused = false;
-
+    
 
     private void Start()
     {
         Time.timeScale = 1f;
         GameIsPaused = false;
+        
     }
 
     void Update()

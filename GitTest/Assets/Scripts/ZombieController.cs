@@ -2,31 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ZombieController : MonoBehaviour
+public class ZombieController : Enemy
 {
     public float lookRadius;
 
-    private Animator anim;
-    private Vector2 playerPosition;
-    private float distanceX, distanceY;
-    private Vector3 direction;
-    private float speed = 0.01F;
     private float attackCooldown = 5f;
     private float nextAttack = -1f;
     Transform target;
-    Player player;
-    public Transform attackPoint;
-    public Vector2 attackRange;
-    public LayerMask enemyLayers;
-    public float Maxhealth = 100f;
-    private float currenthealth;
+    private Animator anim;
 
     void Start()
     {
-        currenthealth = Maxhealth;
+        speed = 0.01f;
         player = GameObject.FindObjectOfType<Player>();
         target = player.transform;
         anim = GetComponent<Animator>();
+        currenthealth = maxHealth;
+        direction.z = 0F;
     }
 
     void Update()
@@ -44,7 +36,7 @@ public class ZombieController : MonoBehaviour
         
     }
 
-    private void Attack()
+    override protected void Attack()
     {
         float currentTime = Time.time;
         if (currentTime > nextAttack)
@@ -62,12 +54,7 @@ public class ZombieController : MonoBehaviour
         }
     }
 
-    public void takeDamage(float damage)
-    {
-        currenthealth -= damage;
-    }
-
-    private void MovementController()
+    override protected void MovementController()
     {
         float distance = Vector3.Distance(target.position, transform.position);
 

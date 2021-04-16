@@ -3,34 +3,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Scientist : MonoBehaviour
+public class Scientist : Enemy
 {
     private Guard[] guards;
     private Guard guard;
-    private Player player;
     private float _time = -1F;
     private bool spooked = false;
     private bool allGuardsDead = false;
     private bool isTouchingWall = false;
     private int guardIndex = 0;
     private Vector2 targetPosition;
-    private float speed = 0.09F;
-    private float distanceX, distanceY;
-    private Vector3 direction;
     private Animator anim;
+
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindObjectOfType<Player>();
-        guards = GameObject.FindObjectsOfType<Guard>();
         anim = GetComponent<Animator>();
+        guards = GameObject.FindObjectsOfType<Guard>();
+        player = GameObject.FindObjectOfType<Player>();
+
         if (guards != null && guards.Length != 0)
         {
             guard = guards[guardIndex];
             //print("I was here");
         }
+
         direction.z = 0F;
-        
+        currenthealth = maxHealth;
+        direction.z = 0F;
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -71,10 +72,13 @@ public class Scientist : MonoBehaviour
                 guard = null;
             }
         
-
-
     }
 
+
+    private void FixedUpdate()
+    {
+        MovementController();
+    }
     private Guard LookForGuard()
     {
         foreach(var guard in guards)
@@ -87,7 +91,7 @@ public class Scientist : MonoBehaviour
         return null;
     }
 
-    private void FixedUpdate()
+    override protected void MovementController()
     {
         if (Time.time.Equals(_time))
         {
@@ -115,7 +119,7 @@ public class Scientist : MonoBehaviour
                 }
 
                 if ((Mathf.Abs(player.transform.position.x - transform.position.x) < 7 &&
-                Mathf.Abs(player.transform.position.y - transform.position.y) < 7)&&
+                Mathf.Abs(player.transform.position.y - transform.position.y) < 7) &&
                 !isTouchingWall)
                 {
                     RunFromDClass();
@@ -125,7 +129,7 @@ public class Scientist : MonoBehaviour
         else
         {
             allGuardsDead = true;
-            if(guard != null)
+            if (guard != null)
             {
                 allGuardsDead = false;
             }
@@ -224,5 +228,10 @@ public class Scientist : MonoBehaviour
         //direction.x = 0.01F;
         //direction.y = 0.01F;
         transform.Translate(direction);
+    }
+
+    protected override void Attack()
+    {
+
     }
 }
