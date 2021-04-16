@@ -43,8 +43,15 @@ public class Guard : MonoBehaviour
     private void Attack()
     {
         Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackPoint.position, attackRange, 0f, enemyLayers);
-        if(hitEnemies.Length!=0)
-        hitEnemies[0].GetComponent<Player>().takeDamage(50f);
+        if (hitEnemies.Length != 0)
+            if (hitEnemies[0].enabled)
+            {
+                hitEnemies[0].GetComponent<Player>().CapturePlayer();
+            }
+            else
+            {
+                hitEnemies[0].GetComponent<Player>().captureScreen.SetActive(false);
+            }
     }
 
     private void OnDrawGizmosSelected()
@@ -65,6 +72,11 @@ public class Guard : MonoBehaviour
     }
 
     private void FixedUpdate()
+    {
+        MovementController();
+    }
+
+    private void MovementController()
     {
         anim.SetBool("isWalking", false);
         if (player != null)
@@ -87,7 +99,7 @@ public class Guard : MonoBehaviour
                     direction.y = -speed * (distanceY / (distanceX + distanceY));
                     //print(direction.x + ", " + direction.y);
                 }
-                anim.SetBool("isWalking",true);
+                anim.SetBool("isWalking", true);
                 transform.rotation = Quaternion.Euler(0F, 180F, 0F);
             }
             else

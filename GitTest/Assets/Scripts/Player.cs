@@ -1,4 +1,5 @@
 using Cinemachine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,23 +7,30 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    public GameObject deathScreen;
+    public GameObject captureScreen;
+    public Slider slider;
     private Animator anim;
     public Transform attackPoint;
     public Vector2 attackRange;
     public LayerMask enemyLayers;
-    private static float time = -10F;
-    public float maxHealth = 100f;
-    private static float currentHealth;
     public Camera mainCamera;
     private static CinemachineVirtualCamera virtualCamera;
-    public GameObject deathScreen;
+    private bool isInfected;
+    private float currentCaptureLevel;
+    private float currentHealth;
+    private static float time = -10F;
+    public float defaultCaptureLevel = 0f;
+    public float maxHealth = 100f;
 
-    // Start is called before the first frame update
+
     void Start()
     {
         virtualCamera = mainCamera.GetComponent<CinemachineBrain>().ActiveVirtualCamera as CinemachineVirtualCamera;
         anim = GetComponent<Animator>();
         currentHealth = maxHealth;
+        currentCaptureLevel = defaultCaptureLevel;
+        isInfected = false;
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -31,7 +39,14 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if(currentHealth <= 0)
+        PlayerCaptureCooldown();
+
+        if(currentCaptureLevel > 0)
+        {
+            captureScreen.SetActive(true);
+        }
+
+        if(currentHealth <= 0 || currentCaptureLevel >= 100f)
         {
             Die();
         }
@@ -73,44 +88,6 @@ public class Player : MonoBehaviour
 
         
     }
-
-    public void takeDamage(float damage)
-    {
-        currentHealth -= damage;
-    }
-
-    private void Die()
-    {
-        print("I'm dead");
-        deathScreen.SetActive(true);
-        this.enabled = false;
-    }
-
-    void Push()
-    {
-        anim.SetTrigger("Push");
-
-        Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackPoint.position, attackRange, 0f, enemyLayers);
-
-        foreach(Collider2D enemy in hitEnemies)
-        {
-            Vector2 force;
-            force.x = 20;
-            if(enemy.GetComponent<Guard>().transform.position.x < transform.position.x)
-            {
-                force.x = -20;
-            }
-            force.y = 0;
-            enemy.GetComponent<Rigidbody2D>().AddForce(force, ForceMode2D.Impulse);
-            enemy.GetComponent<Guard>().takeDamage(50f);
-        }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.DrawWireCube(attackPoint.position, attackRange);
-    }
-
     void FixedUpdate()
     {
         float speed = 0.08F;
@@ -172,8 +149,83 @@ public class Player : MonoBehaviour
             Dash(-8f, 0f, GetComponent<Rigidbody2D>());
         }
 
+    }
 
+    public void takeDamage(float damage)
+    {
+        currentHealth -= damage;
+    }
 
+    private void Die()
+    {
+        captureScreen.SetActive(false);
+        deathScreen.SetActive(true);
+        this.enabled = false;
+    }
+
+    private void PlayerCaptureCooldown()
+    {
+        if(currentCaptureLevel != 0f)
+        {
+            currentCaptureLevel-= 0.5f;
+            captureScreen.SetActive(false);
+        }
+    }
+
+    public void CapturePlayer()
+    {
+        currentCaptureLevel += 1f;
+        slider.value = currentCaptureLevel;
+    }
+
+    void Push()
+    {
+        anim.SetTrigger("Push");
+
+        Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackPoint.position, attackRange, 0f, enemyLayers);
+
+        foreach(Collider2D enemy in hitEnemies)
+        {
+            Vector2 force;
+            force.x = 20;
+            try
+            {
+                if (enemy.GetComponent<Guard>().transform.position.x < transform.position.x)
+                {
+                    force.x = -20;
+                }
+                force.y = 0;
+                enemy.GetComponent<Rigidbody2D>().AddForce(force, ForceMode2D.Impulse);
+                enemy.GetComponent<Guard>().takeDamage(50f);
+
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            try
+            {
+                if (enemy.GetComponent<ZombieController>().transform.position.x < transform.position.x)
+                {
+                    force.x = -20;
+                }
+                force.y = 0;
+                enemy.GetComponent<Rigidbody2D>().AddForce(force, ForceMode2D.Impulse);
+                enemy.GetComponent<ZombieController>().takeDamage(50f);
+
+            }
+            catch (Exception e)
+            {
+
+            }
+
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireCube(attackPoint.position, attackRange);
     }
 
     private static void Dash(float x, float y, Rigidbody2D player)
@@ -191,5 +243,10 @@ public class Player : MonoBehaviour
                 time = currentTime + 5;
             }
         }
+    }
+
+    public void Infect()
+    {
+        isInfected = true;
     }
 }
