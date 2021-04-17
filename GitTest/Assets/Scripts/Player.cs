@@ -75,10 +75,10 @@ public class Player : MonoBehaviour
 
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.S))
         {
-            anim.SetBool("isRunning", true);
+            anim.SetBool("isWalking", true);
         }else
         {
-            anim.SetBool("isRunning", false);
+            anim.SetBool("isWalking", false);
         }
 
         if (Input.GetKeyDown(KeyCode.Space))

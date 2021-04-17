@@ -12,6 +12,7 @@ public class ZombieController : Enemy
 
     void Start()
     {
+        type = "Zombie";
         speed = 0.01f;
         player = GameObject.FindObjectOfType<Player>();
         target = player.transform;
@@ -46,13 +47,22 @@ public class ZombieController : Enemy
         if (currentTime > nextAttack)
         {
             Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackPoint.position, attackRange, 0f, enemyLayers);
-            if (hitEnemies.Length != 0)
+            foreach (var enemy in hitEnemies)
             {
-                if (hitEnemies[0].enabled)
+                if (enemy.enabled)
                 {
-                    hitEnemies[0].GetComponent<Player>().Infect();
-                    hitEnemies[0].GetComponent<Player>().TakeDamage(20f);
-                    nextAttack = currentTime + attackCooldown;
+                    if (enemy.tag != "Player")
+                    {
+                        enemy.GetComponent<Enemy>().TakeDamage(20f);
+                        enemy.GetComponent<Enemy>().Infect();
+                        nextAttack = currentTime + attackCooldown;
+                    }
+                    else
+                    {
+                        enemy.GetComponent<Player>().TakeDamage(20f);
+                        enemy.GetComponent<Player>().Infect();
+                        nextAttack = currentTime + attackCooldown;
+                    }
                 }
             }
         }
@@ -65,39 +75,7 @@ public class ZombieController : Enemy
         anim.SetBool("isWalking", false);
         if (distance < lookRadius)
         {
-            playerPosition = player.transform.position;
-            distanceX = GetComponent<Rigidbody2D>().transform.position.x - playerPosition.x;
-            distanceY = GetComponent<Rigidbody2D>().transform.position.y - playerPosition.y;
-            if (distanceX > 0)
-            {
-                if ((distanceX > 0 && distanceY < 0) || (distanceX < 0 && distanceY > 0))
-                {
-                    direction.x = speed * (distanceX / (distanceX - distanceY));
-                    direction.y = -speed * (distanceY / (distanceX - distanceY));
-                }
-                else
-                {
-                    direction.x = speed * (distanceX / (distanceX + distanceY));
-                    direction.y = -speed * (distanceY / (distanceX + distanceY));
-                }
-                anim.SetBool("isWalking", true);
-                transform.rotation = Quaternion.Euler(0F, 180F, 0F);
-            }
-            else
-            {
-                if ((distanceX > 0 && distanceY < 0) || (distanceX < 0 && distanceY > 0))
-                {
-                    direction.x = speed * (distanceX / (distanceX - distanceY));
-                    direction.y = speed * (distanceY / (distanceX - distanceY));
-                }
-                else
-                {
-                    direction.x = speed * (distanceX / (distanceX + distanceY));
-                    direction.y = speed * (distanceY / (distanceX + distanceY));
-                }
-                anim.SetBool("isWalking", true);
-                transform.rotation = Quaternion.Euler(0F, 0F, 0F);
-            }
+            direction = MoveTowardsTarget(player.transform);
             transform.Translate(direction);
         }
         else

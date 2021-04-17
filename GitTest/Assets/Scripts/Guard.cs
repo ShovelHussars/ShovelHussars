@@ -8,6 +8,7 @@ public class Guard : Enemy
 
     void Start()
     {
+        type = "Guard";
         currenthealth = maxHealth;
         anim = GetComponent<Animator>();
         direction.z = 0F;
@@ -54,53 +55,8 @@ public class Guard : Enemy
     override protected void MovementController()
     {
         anim.SetBool("isWalking", false);
-        if (player != null)
-        {
-            playerPosition = player.transform.position;
-            distanceX = GetComponent<Rigidbody2D>().transform.position.x - playerPosition.x;
-            distanceY = GetComponent<Rigidbody2D>().transform.position.y - playerPosition.y;
-            //print("X=" + distanceX + " Y=" + distanceY);
-            if (distanceX > 0)
-            {
-                if ((distanceX > 0 && distanceY < 0) || (distanceX < 0 && distanceY > 0))
-                {
-                    direction.x = speed * (distanceX / (distanceX - distanceY));
-                    direction.y = -speed * (distanceY / (distanceX - distanceY));
-                    //print(direction.x + ", " + direction.y);
-                }
-                else
-                {
-                    direction.x = speed * (distanceX / (distanceX + distanceY));
-                    direction.y = -speed * (distanceY / (distanceX + distanceY));
-                    //print(direction.x + ", " + direction.y);
-                }
-                anim.SetBool("isWalking", true);
-                transform.rotation = Quaternion.Euler(0F, 180F, 0F);
-            }
-            else
-            {
-                if ((distanceX > 0 && distanceY < 0) || (distanceX < 0 && distanceY > 0))
-                {
-                    direction.x = speed * (distanceX / (distanceX - distanceY));
-                    direction.y = speed * (distanceY / (distanceX - distanceY));
-                    //print(direction.x + ", " + direction.y);
-                }
-                else
-                {
-                    direction.x = speed * (distanceX / (distanceX + distanceY));
-                    direction.y = speed * (distanceY / (distanceX + distanceY));
-                    //print(direction.x + ", " + direction.y);
-                }
-                anim.SetBool("isWalking", true);
-                transform.rotation = Quaternion.Euler(0F, 0F, 0F);
-            }
-            //direction.x = 0.01F;
-            //direction.y = 0.01F;
-            transform.Translate(direction);
-        }
-        else
-        {
-            //print("NO PLAYER!");
-        }
+
+        direction = MoveTowardsTarget(player.transform);
+        transform.Translate(direction);
     }
 }
