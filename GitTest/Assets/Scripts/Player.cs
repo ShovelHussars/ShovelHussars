@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     public Transform attackPoint;
     public Vector2 attackRange;
     public LayerMask enemyLayers;
+    public LayerMask itemLayers;
     public Camera mainCamera;
     private static CinemachineVirtualCamera virtualCamera;
     private bool isInfected;
@@ -24,10 +25,12 @@ public class Player : MonoBehaviour
     public float maxHealth = 100f;
     public PolygonCollider2D limits;
     private float maximumOrtographicSize;
+    public float pickupRadius = 0.5f;
 
 
     void Start()
     {
+        
         float wide;
         float high;
         if((wide = limits.bounds.size.x*Screen.currentResolution.height/Screen.currentResolution.width/2) > (high=limits.bounds.size.y / 2))
@@ -52,6 +55,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        
         PlayerCaptureCooldown();
 
 
@@ -75,6 +79,11 @@ public class Player : MonoBehaviour
         {
             if (virtualCamera.m_Lens.OrthographicSize > 0.5f)
                 virtualCamera.m_Lens.OrthographicSize -= 0.05f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            PickUpItem();
         }
 
 
@@ -102,6 +111,18 @@ public class Player : MonoBehaviour
 
         
     }
+
+    private void PickUpItem()
+    {
+        Collider2D[] nearItems = Physics2D.OverlapCircleAll(new Vector2(transform.position.x,transform.position.y-0.45f), pickupRadius, itemLayers);
+        if (nearItems.Length != 0)
+        {
+            nearItems[0].GetComponent<ItemPickup>().PickUp();
+            print("here");
+        }
+        
+    }
+
     void FixedUpdate()
     {
         float speed = 0.08F;
@@ -217,6 +238,7 @@ public class Player : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireCube(attackPoint.position, attackRange);
+        Gizmos.DrawWireSphere(new Vector2(transform.position.x, transform.position.y - 0.45f), pickupRadius);
     }
 
     private static void Dash(float x, float y, Rigidbody2D player)
