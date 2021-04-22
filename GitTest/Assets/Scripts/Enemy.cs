@@ -6,7 +6,6 @@ using UnityEngine;
 public abstract class Enemy : MonoBehaviour
 {
     protected Player player;
-    protected Vector2 playerPosition;
     public Transform attackPoint;
     public Vector2 attackRange;
     public LayerMask enemyLayers;
@@ -32,7 +31,13 @@ public abstract class Enemy : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        
         currenthealth -= damage;
+        
+        if (type == "PassiveD-Class")
+        {
+            type = "AggressiveD-Class";
+        }
     }
 
     public string Type()
@@ -40,34 +45,57 @@ public abstract class Enemy : MonoBehaviour
         return type;
     }
 
-    protected Enemy LocateClosestEnemy()
+    protected GameObject LocateClosestEnemy()
     {
         float distance = 100000000f;
-        Enemy closestEnemy = null;
+        GameObject closestEnemy = null;
+
+        int aliveEnemies = 0;
 
         foreach(var enemy in allEnemies)
         {
-            if (enemy != this.GetComponent<Enemy>() && enemy.enabled && enemy.type != "Guard" && Vector3.Distance(enemy.transform.position, transform.position) < distance)
+            if(enemy != this.GetComponent<Enemy>() && enemy.enabled)
+            {
+                aliveEnemies++;
+            }
+            if (enemy != this.GetComponent<Enemy>() && enemy.enabled && Vector3.Distance(enemy.transform.position, transform.position) < distance)
             {
                 distance = Vector3.Distance(enemy.transform.position, transform.position);
-                closestEnemy = enemy;
+                closestEnemy = enemy.gameObject;
             }
+        }
+        if (aliveEnemies != 0)
+        {
+            if (Vector3.Distance(transform.position, player.transform.position) <
+                Vector3.Distance(transform.position, closestEnemy.transform.position))
+            {
+                closestEnemy = player.gameObject;
+            }
+        }
+        else
+        {
+            closestEnemy = player.gameObject;
         }
         return closestEnemy;
     }
 
     protected Vector3 MoveTowardsTarget(Transform targetTransform)
     {
-        Vector2 targetPosition = targetTransform.position;
+        return MoveTowardsVector3(targetTransform.position);
+    }
+
+    protected Vector3 MoveTowardsVector3(Vector3 target)
+    {
+        Vector2 targetPosition = target;
         Vector3 directionOfTarget;
         directionOfTarget.x = 0f;
         directionOfTarget.y = 0f;
         directionOfTarget.z = 0f;
-        if (transform.position != targetTransform.position)
+        if (transform.position != target)
         {
             distanceX = transform.position.x - targetPosition.x;
             distanceY = transform.position.y - targetPosition.y;
-            if(distanceX == distanceY)
+            if (distanceX == distanceY)
             {
                 distanceY += 0.0000001f;
             }
@@ -104,11 +132,6 @@ public abstract class Enemy : MonoBehaviour
             }
         }
         return directionOfTarget;
-    }
-
-    public void Infect()
-    {
-        isInfected = true;
     }
 
     protected Vector3 MoveAwayFromTarget(Transform targetTransform)
@@ -150,6 +173,11 @@ public abstract class Enemy : MonoBehaviour
             transform.rotation = Quaternion.Euler(0F, 180F, 0F);
         }
         return directionOfTarget;
+    }
+
+    public void Infect()
+    {
+        isInfected = true;
     }
 
     protected abstract void MovementController();

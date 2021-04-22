@@ -22,10 +22,23 @@ public class Player : MonoBehaviour
     private static float time = -10F;
     public float defaultCaptureLevel = 0f;
     public float maxHealth = 100f;
+    public PolygonCollider2D limits;
+    private float maximumOrtographicSize;
 
 
     void Start()
     {
+        float wide;
+        float high;
+        if((wide = limits.bounds.size.x*Screen.currentResolution.height/Screen.currentResolution.width/2) > (high=limits.bounds.size.y / 2))
+        {
+            maximumOrtographicSize = high;
+        }
+        else
+        {
+            maximumOrtographicSize = wide;
+        }
+        
         virtualCamera = mainCamera.GetComponent<CinemachineBrain>().ActiveVirtualCamera as CinemachineVirtualCamera;
         anim = GetComponent<Animator>();
         currentHealth = maxHealth;
@@ -41,6 +54,7 @@ public class Player : MonoBehaviour
     {
         PlayerCaptureCooldown();
 
+
         if(currentCaptureLevel > 0)
         {
             captureScreen.SetActive(true);
@@ -50,10 +64,10 @@ public class Player : MonoBehaviour
         {
             Die();
         }
-        
+
         if(Input.GetAxisRaw("Mouse ScrollWheel") < 0)
         {
-            if(virtualCamera.m_Lens.OrthographicSize < 3f)
+            if(virtualCamera.m_Lens.OrthographicSize < maximumOrtographicSize-0.05)
                 virtualCamera.m_Lens.OrthographicSize += 0.05f;
         }
 
@@ -188,7 +202,7 @@ public class Player : MonoBehaviour
         {
             Vector2 force;
             force.x = 20;
-
+            
             if (enemy.GetComponent<Enemy>().transform.position.x < transform.position.x)
             {
                 force.x = -20;

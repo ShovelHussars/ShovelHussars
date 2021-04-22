@@ -15,6 +15,7 @@ public class ZombieController : Enemy
         type = "Zombie";
         speed = 0.01f;
         player = GameObject.FindObjectOfType<Player>();
+        allEnemies = GameObject.FindObjectsOfType<Enemy>();
         target = player.transform;
         anim = GetComponent<Animator>();
         currenthealth = maxHealth;
@@ -23,13 +24,18 @@ public class ZombieController : Enemy
 
     void Update()
     {
-        MovementController();
-        Attack();
-
         if(currenthealth <= 0)
         {
             Die(anim);
         }
+    }
+
+    void FixedUpdate()
+    {
+        target = LocateClosestEnemy().transform;
+        MovementController();
+        Attack();
+        
     }
 
     private void OnDrawGizmosSelected()
@@ -75,7 +81,7 @@ public class ZombieController : Enemy
         anim.SetBool("isWalking", false);
         if (distance < lookRadius)
         {
-            direction = MoveTowardsTarget(player.transform);
+            direction = MoveTowardsTarget(target);
             transform.Translate(direction);
         }
         else

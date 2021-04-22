@@ -9,9 +9,12 @@ public class DClass : Enemy
     public float lookRadius;
     private float nextAttack = -1f;
     private readonly float attackCooldown = 5f;
+    private float nextRandomMoveTrigger = -1f;
+    private Vector3 randomLocation;
 
     void Start()
     {
+        randomLocation = transform.position;
         GenerateBehaviourType();
         speed = 0.05f;
         allEnemies = GameObject.FindObjectsOfType<Enemy>();
@@ -32,6 +35,7 @@ public class DClass : Enemy
     private void FixedUpdate()
     {
         MovementController();
+        
     }
 
     private void GenerateBehaviourType()
@@ -71,11 +75,41 @@ public class DClass : Enemy
     private void PassiveBehaviour()
     {
         
+        if (Time.time > nextRandomMoveTrigger)
+        {
+            nextRandomMoveTrigger = Time.time + 5f;
+            
+            randomLocation.x = transform.position.x + Random.Range(-3f, 3f);
+            randomLocation.y = transform.position.y + Random.Range(-3f, 3f);
+            randomLocation.z = transform.position.z;
+            if (isTouchingWall)
+            {
+                direction = MoveTowardsVector3(randomLocation);
+                transform.Translate(direction);
+            }
+        }
+
+        if (Vector3.Distance(randomLocation,transform.position) > 0.1f)
+        {
+            
+            direction = MoveTowardsVector3(randomLocation);
+            transform.Translate(direction);
+        }
+        else
+        {
+            anim.SetBool("isWalking", false);
+        }
+
+        if (isTouchingWall)
+        {
+            randomLocation = transform.position;
+        }
     }
 
     private void CowardBehaviour()
     {
-        Enemy closestEnemy = LocateClosestEnemy();
+        GameObject closestEnemy = LocateClosestEnemy();
+        
         if (closestEnemy != null && !isTouchingWall)
         {
             direction = MoveAwayFromTarget(closestEnemy.transform);
@@ -89,7 +123,7 @@ public class DClass : Enemy
 
     private void AggressiveBehaviour()
     {
-        Enemy closestEnemy = LocateClosestEnemy();
+        GameObject closestEnemy = LocateClosestEnemy();
         if (closestEnemy != null)
         {
             direction = MoveTowardsTarget(closestEnemy.transform);
@@ -110,13 +144,17 @@ public class DClass : Enemy
         Gizmos.DrawWireCube(attackPoint.position, attackRange);
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (CollidedWitwall(collision))
         {
             isTouchingWall = true;
         }
-        else
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (CollidedWitwall(collision))
         {
             isTouchingWall = false;
         }
@@ -158,4 +196,5 @@ public class DClass : Enemy
             }
         }
     }
+
 }
