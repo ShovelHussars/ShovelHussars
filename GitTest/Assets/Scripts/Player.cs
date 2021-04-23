@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     public PolygonCollider2D limits;
     private float maximumOrtographicSize;
     public float pickupRadius = 0.5f;
-
+    public GameObject inventorScreen;
 
     void Start()
     {
@@ -86,6 +86,10 @@ public class Player : MonoBehaviour
             PickUpItem();
         }
 
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            
+        }
 
         if (Input.GetKey(KeyCode.A))
         {
@@ -118,7 +122,6 @@ public class Player : MonoBehaviour
         if (nearItems.Length != 0)
         {
             nearItems[0].GetComponent<ItemPickup>().PickUp();
-            print("here");
         }
         
     }

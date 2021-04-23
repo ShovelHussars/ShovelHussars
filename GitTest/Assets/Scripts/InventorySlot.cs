@@ -24,4 +24,17 @@ public class InventorySlot : MonoBehaviour
         icon.enabled = false;
         dropButton.interactable = false;
     }
+
+    public void OnDropButton()
+    {
+        Inventory.instance.Remove(item);
+    }
+
+    public void UseItem()
+    {
+        if(item != null)
+        {
+            item.Use();
+        }
+    }
 }

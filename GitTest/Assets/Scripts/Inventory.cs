@@ -12,12 +12,18 @@ public class Inventory: MonoBehaviour {
     }
     #endregion
 
+    private Player player;
     public delegate void OnItemChanged();
     public OnItemChanged OnItemChangedCallback;
 
     public List<Item> items = new List<Item>();
 
     public int space = 6;
+
+    private void Start()
+    {
+        player = GameObject.FindObjectOfType<Player>();
+    }
 
     public bool Add(Item item)
     {
@@ -33,6 +39,8 @@ public class Inventory: MonoBehaviour {
 
     public void Remove(Item item)
     {
+        GameObject pref = ItemPrefHandler.instance.FindPref(item);
+        Instantiate(pref, player.transform.position,player.transform.rotation);
         items.Remove(item);
         OnItemChangedCallback.Invoke();
     }
