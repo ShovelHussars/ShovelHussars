@@ -3999,10 +3999,14 @@ MonoBehaviour:
   enemyLayers:
     serializedVersion: 2
     m_Bits: 8
+  itemLayers:
+    serializedVersion: 2
+    m_Bits: 0
   mainCamera: {fileID: 1879395661}
   defaultCaptureLevel: 0
   maxHealth: 100
   limits: {fileID: 1093612873}
+  pickupRadius: 0.5
 --- !u!212 &1354201834
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6102,7 +6106,7 @@ GameObject:
   - component: {fileID: 1879395660}
   - component: {fileID: 1879395659}
   m_Layer: 0
-  m_Name: Camera (1)
+  m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6201,7 +6205,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1879395658}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.7969704, y: 0.0070700645, z: -10}
+  m_LocalPosition: {x: -4.830413, y: 0.01430738, z: -10}
   m_LocalScale: {x: 1, y: 0.75, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
