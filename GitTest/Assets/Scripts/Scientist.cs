@@ -12,14 +12,19 @@ public class Scientist : Enemy
     private bool spooked = false;
     private bool allGuardsDead = false;
     private bool isTouchingWall = false;
-    private Vector2 targetPosition;
 
     void Start()
     {
         type = "Scientist";
         anim = GetComponent<Animator>();
         guards = GameObject.FindObjectsOfType<Guard>();
-        player = GameObject.FindObjectOfType<Player>();
+        Entity[] temp = GameObject.FindObjectsOfType<Entity>();
+        allEnemies = new List<Entity>();
+        foreach (var entity in temp)
+        {
+            if (!entity.CompareTag("Guard") && !entity.CompareTag("Scientist"))
+                allEnemies.Add(entity.GetComponent<Entity>());
+        }
 
         chosenGuard = LookForGuard();
         if(chosenGuard == null)
@@ -28,7 +33,7 @@ public class Scientist : Enemy
         }
 
         direction.z = 0F;
-        currenthealth = maxHealth;
+        currentHealth = maxHealth;
 
     }
 
@@ -47,24 +52,20 @@ public class Scientist : Enemy
     private bool CollidedWitwall(Collision2D collision)
     {
         GameObject wall = collision.gameObject;
-        if(wall.tag.Equals("Wall") || wall.tag.Equals("Door"))
+        if(wall.CompareTag("Wall") || wall.CompareTag("Door"))
         {
             return true;
         }
         return false;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(currenthealth <= 0)
+        if(currentHealth <= 0)
         {
             Die(anim);
         }
-
-        
     }
-
 
     private void FixedUpdate()
     {
@@ -103,7 +104,7 @@ public class Scientist : Enemy
 
             if(spooked && !isTouchingWall)
             {
-                direction = MoveAwayFromTarget(player.transform);
+                direction = MoveAwayFromTarget(LocateClosestEnemy().transform);
                 transform.Translate(direction);
             }
             else if (!spooked)
@@ -128,7 +129,7 @@ public class Scientist : Enemy
 
             if (spooked && !isTouchingWall)
             {
-                direction = MoveAwayFromTarget(player.transform);
+                direction = MoveAwayFromTarget(LocateClosestEnemy().transform);
                 transform.Translate(direction);
             }
             else

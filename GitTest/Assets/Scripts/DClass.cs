@@ -17,16 +17,21 @@ public class DClass : Enemy
         randomLocation = transform.position;
         GenerateBehaviourType();
         speed = 0.05f;
-        allEnemies = GameObject.FindObjectsOfType<Enemy>();
-        player = GameObject.FindObjectOfType<Player>();
+        Entity[] temp = GameObject.FindObjectsOfType<Entity>();
+        allEnemies = new List<Entity>();
+        foreach (var entity in temp)
+        {
+            allEnemies.Add(entity);
+        }
         anim = GetComponent<Animator>();
-        currenthealth = maxHealth;
+        currentHealth = maxHealth;
         direction.z = 0F;
     }
 
     void Update()
     {
-        if(currenthealth <= 0)
+        EntityCaptureCooldown();
+        if(currentHealth <= 0 || currentCaptureLevel >= 100f)
         {
             Die(anim);
         }
@@ -163,7 +168,7 @@ public class DClass : Enemy
     private bool CollidedWitwall(Collision2D collision)
     {
         GameObject wall = collision.gameObject;
-        if (wall.tag.Equals("Wall") || wall.tag.Equals("Door"))
+        if (wall.CompareTag("Wall") || wall.CompareTag("Door"))
         {
             return true;
         }
@@ -179,17 +184,9 @@ public class DClass : Enemy
             {
                 if (enemy.enabled)
                 {
-                    if (enemy.tag != "Player")
+                    if (enemy.GetComponent<Entity>() != this)
                     {
-                        if (enemy.GetComponent<Enemy>() != this)
-                        {
-                            enemy.GetComponent<Enemy>().TakeDamage(20f);
-                            nextAttack = currentTime + attackCooldown;
-                        }
-                    }
-                    else
-                    {
-                        enemy.GetComponent<Player>().TakeDamage(20f);
+                        enemy.GetComponent<Entity>().TakeDamage(20f);
                         nextAttack = currentTime + attackCooldown;
                     }
                 }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8116419691953726428}
   - component: {fileID: 8116419691953726431}
   - component: {fileID: 8116419691953726430}
-  m_Layer: 3
+  m_Layer: 9
   m_Name: Guard
   m_TagString: Guard
   m_Icon: {fileID: 0}
@@ -181,7 +181,7 @@ MonoBehaviour:
   attackRange: {x: 0.35, y: 0.5}
   enemyLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 72
 --- !u!1 &8116419692108128463
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,7 +206,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8116419692108128463}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.22, y: 0, z: 0}
+  m_LocalPosition: {x: 0.177, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8116419691953726435}

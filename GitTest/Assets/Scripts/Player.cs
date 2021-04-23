@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player : MonoBehaviour
+public class Player : Entity
 {
     public GameObject deathScreen;
     public GameObject captureScreen;
@@ -17,12 +17,8 @@ public class Player : MonoBehaviour
     public LayerMask itemLayers;
     public Camera mainCamera;
     private static CinemachineVirtualCamera virtualCamera;
-    private bool isInfected;
-    private float currentCaptureLevel;
-    private float currentHealth;
     private static float time = -10F;
     public float defaultCaptureLevel = 0f;
-    public float maxHealth = 100f;
     public PolygonCollider2D limits;
     private float maximumOrtographicSize;
     public float pickupRadius = 0.5f;
@@ -55,12 +51,16 @@ public class Player : MonoBehaviour
     private void Update()
     {
         
-        PlayerCaptureCooldown();
+        EntityCaptureCooldown();
 
 
         if(currentCaptureLevel > 0)
         {
             captureScreen.SetActive(true);
+        }
+        else
+        {
+            captureScreen.SetActive(false);
         }
 
         if(currentHealth <= 0 || currentCaptureLevel >= 100f)
@@ -183,11 +183,6 @@ public class Player : MonoBehaviour
 
     }
 
-    public void TakeDamage(float damage)
-    {
-        currentHealth -= damage;
-    }
-
     private void Die()
     {
         captureScreen.SetActive(false);
@@ -195,18 +190,9 @@ public class Player : MonoBehaviour
         this.enabled = false;
     }
 
-    private void PlayerCaptureCooldown()
+    public new void CaptureEntity()
     {
-        if(currentCaptureLevel != 0f)
-        {
-            currentCaptureLevel-= 0.5f;
-            captureScreen.SetActive(false);
-        }
-    }
-
-    public void CapturePlayer()
-    {
-        currentCaptureLevel += 1f;
+        currentCaptureLevel += 0.76f;
         slider.value = currentCaptureLevel;
     }
 
@@ -246,17 +232,14 @@ public class Player : MonoBehaviour
             
             if (currentTime > time)
             {
-                Vector2 force = new Vector2();
-                force.x = 2f*x;
-                force.y = 2f*y;
+                Vector2 force = new Vector2
+                {
+                    x = 2f * x,
+                    y = 2f * y
+                };
                 player.AddForce(force, ForceMode2D.Impulse);
                 time = currentTime + 5;
             }
         }
-    }
-
-    public void Infect()
-    {
-        isInfected = true;
     }
 }

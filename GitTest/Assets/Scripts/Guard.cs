@@ -9,24 +9,30 @@ public class Guard : Enemy
     void Start()
     {
         type = "Guard";
-        currenthealth = maxHealth;
+        currentHealth = maxHealth;
+        Entity[] temp = GameObject.FindObjectsOfType<Entity>();
+        allEnemies = new List<Entity>();
+        foreach (var entity in temp)
+        {
+            if (!entity.CompareTag("Guard") && !entity.CompareTag("Scientist"))
+            {
+                allEnemies.Add(entity.GetComponent<Entity>());
+            }
+        }
         anim = GetComponent<Animator>();
         direction.z = 0F;
-        player = GameObject.FindObjectOfType<Player>();
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-        if(currenthealth <= 0)
+        if(currentHealth <= 0)
         {
             Die(anim);
         }
          
         Attack();
     }
-
-    
 
     private void OnDrawGizmosSelected()
     {
@@ -42,21 +48,33 @@ public class Guard : Enemy
     {
         Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackPoint.position, attackRange, 0f, enemyLayers);
         if (hitEnemies.Length != 0)
-            if (hitEnemies[0].enabled)
+            foreach (var enemy in hitEnemies)
             {
-                hitEnemies[0].GetComponent<Player>().CapturePlayer();
-            }
-            else
-            {
-                hitEnemies[0].GetComponent<Player>().captureScreen.SetActive(false);
+                if (enemy.enabled)
+                {
+                    if (enemy.CompareTag("Player"))
+                    {
+                        enemy.GetComponent<Player>().CaptureEntity();
+                    }
+                    else
+                    {
+                        enemy.GetComponent<Entity>().CaptureEntity();
+                    }
+                }
             }
     }
 
     override protected void MovementController()
     {
         anim.SetBool("isWalking", false);
-
-        direction = MoveTowardsTarget(player.transform);
-        transform.Translate(direction);
+        try
+        {
+            direction = MoveTowardsTarget(LocateClosestEnemy().transform);
+            transform.Translate(direction);
+        }
+        catch (Exception)
+        {
+        }
+       
     }
 }

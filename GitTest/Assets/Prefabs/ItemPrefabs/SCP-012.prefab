@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4537579511881851100}
   - component: {fileID: 4537579511881851101}
   - component: {fileID: 4537579511881851102}
+  - component: {fileID: -9053063816924382031}
   m_Layer: 8
   m_Name: SCP-012
   m_TagString: Untagged
@@ -123,3 +124,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.69, y: 4.22}
   m_EdgeRadius: 0
+--- !u!114 &-9053063816924382031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4537579511881851090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dd085b35cbb3c34595613dcc9ba95d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

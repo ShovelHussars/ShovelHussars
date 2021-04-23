@@ -14,17 +14,21 @@ public class ZombieController : Enemy
     {
         type = "Zombie";
         speed = 0.01f;
-        player = GameObject.FindObjectOfType<Player>();
-        allEnemies = GameObject.FindObjectsOfType<Enemy>();
-        target = player.transform;
+        Entity[] temp = GameObject.FindObjectsOfType<Entity>();
+        allEnemies = new List<Entity>();
+        foreach (var entity in temp)
+        {
+            allEnemies.Add(entity);
+        }
+        target = LocateClosestEnemy().transform;
         anim = GetComponent<Animator>();
-        currenthealth = maxHealth;
+        currentHealth = maxHealth;
         direction.z = 0F;
     }
 
     void Update()
     {
-        if(currenthealth <= 0)
+        if(currentHealth <= 0)
         {
             Die(anim);
         }
@@ -57,18 +61,11 @@ public class ZombieController : Enemy
             {
                 if (enemy.enabled)
                 {
-                    if (enemy.tag != "Player")
-                    {
-                        enemy.GetComponent<Enemy>().TakeDamage(20f);
-                        enemy.GetComponent<Enemy>().Infect();
-                        nextAttack = currentTime + attackCooldown;
-                    }
-                    else
-                    {
-                        enemy.GetComponent<Player>().TakeDamage(20f);
-                        enemy.GetComponent<Player>().Infect();
-                        nextAttack = currentTime + attackCooldown;
-                    }
+
+                    enemy.GetComponent<Entity>().TakeDamage(20f);
+                    enemy.GetComponent<Entity>().Infect();
+                    nextAttack = currentTime + attackCooldown;
+
                 }
             }
         }

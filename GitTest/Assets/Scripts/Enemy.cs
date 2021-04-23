@@ -3,21 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Enemy : MonoBehaviour
+public abstract class Enemy : Entity
 {
-    protected Player player;
     public Transform attackPoint;
     public Vector2 attackRange;
     public LayerMask enemyLayers;
-    protected Enemy[] allEnemies;
+    protected List<Entity> allEnemies;
     protected Animator anim;
     protected float speed = 0.08F;
     protected float distanceX, distanceY;
     protected Vector3 direction;
-    protected float maxHealth = 100f;
-    protected float currenthealth;
-    private float movementTimer = 0F;
-    protected bool isInfected = false;
     protected string type;
 
     abstract protected void Attack();
@@ -29,10 +24,10 @@ public abstract class Enemy : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, 0f, 90f);
     }
 
-    public void TakeDamage(float damage)
+    public new void TakeDamage(float damage)
     {
         
-        currenthealth -= damage;
+        currentHealth -= damage;
         
         if (type == "PassiveD-Class")
         {
@@ -50,31 +45,13 @@ public abstract class Enemy : MonoBehaviour
         float distance = 100000000f;
         GameObject closestEnemy = null;
 
-        int aliveEnemies = 0;
-
         foreach(var enemy in allEnemies)
         {
-            if(enemy != this.GetComponent<Enemy>() && enemy.enabled)
+            if (enemy != this.GetComponent<Entity>() && enemy.enabled && Vector2.Distance(enemy.transform.position, transform.position) < distance)
             {
-                aliveEnemies++;
-            }
-            if (enemy != this.GetComponent<Enemy>() && enemy.enabled && Vector3.Distance(enemy.transform.position, transform.position) < distance)
-            {
-                distance = Vector3.Distance(enemy.transform.position, transform.position);
+                distance = Vector2.Distance(enemy.transform.position, transform.position);
                 closestEnemy = enemy.gameObject;
             }
-        }
-        if (aliveEnemies != 0)
-        {
-            if (Vector3.Distance(transform.position, player.transform.position) <
-                Vector3.Distance(transform.position, closestEnemy.transform.position))
-            {
-                closestEnemy = player.gameObject;
-            }
-        }
-        else
-        {
-            closestEnemy = player.gameObject;
         }
         return closestEnemy;
     }
@@ -173,11 +150,6 @@ public abstract class Enemy : MonoBehaviour
             transform.rotation = Quaternion.Euler(0F, 180F, 0F);
         }
         return directionOfTarget;
-    }
-
-    public void Infect()
-    {
-        isInfected = true;
     }
 
     protected abstract void MovementController();
