@@ -245,7 +245,6 @@ public class Player : Entity
 
     public void Heal(float restore)
     {
-        Debug.Log("Heal");
         currentHealth += restore;
         if(currentHealth > 100f)
         {

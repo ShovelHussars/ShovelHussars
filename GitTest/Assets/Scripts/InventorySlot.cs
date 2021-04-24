@@ -27,7 +27,14 @@ public class InventorySlot : MonoBehaviour
 
     public void OnDropButton()
     {
-        Inventory.instance.Remove(item);
+        if (item.name == "SCP-012")
+        {
+            UseItem();
+        }
+        else
+        {
+            Inventory.instance.Remove(item);
+        }
     }
 
     public void UseItem()
