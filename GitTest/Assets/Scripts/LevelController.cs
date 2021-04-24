@@ -8,14 +8,13 @@ public class LevelController : MonoBehaviour
 {
     Enemy[] _enemies;
     GameObject[] _doors;
-    // Start is called before the first frame update
+
     void Start()
     {
         _enemies = GameObject.FindObjectsOfType<Enemy>();
         _doors = GameObject.FindGameObjectsWithTag("Door");
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (EnemiesAreAllDead())

@@ -10,7 +10,7 @@ public abstract class Enemy : Entity
     public LayerMask enemyLayers;
     protected List<Entity> allEnemies;
     protected Animator anim;
-    protected float speed = 0.08F;
+    protected float speed = 0.05F;
     protected float distanceX, distanceY;
     protected Vector3 direction;
     protected string type;
@@ -56,59 +56,28 @@ public abstract class Enemy : Entity
         return closestEnemy;
     }
 
-    protected Vector3 MoveTowardsTarget(Transform targetTransform)
+    protected void MoveTowardsTarget(Transform targetTransform)
     {
-        return MoveTowardsVector3(targetTransform.position);
+        MoveTowardsVector3(targetTransform.position);
     }
 
-    protected Vector3 MoveTowardsVector3(Vector3 target)
+    protected void MoveTowardsVector3(Vector3 target)
     {
-        Vector2 targetPosition = target;
-        Vector3 directionOfTarget;
-        directionOfTarget.x = 0f;
-        directionOfTarget.y = 0f;
-        directionOfTarget.z = 0f;
         if (transform.position != target)
         {
-            distanceX = transform.position.x - targetPosition.x;
-            distanceY = transform.position.y - targetPosition.y;
-            if (distanceX == distanceY)
+            if(transform.position.x > target.x)
             {
-                distanceY += 0.0000001f;
-            }
-
-            if (distanceX > 0)
-            {
-                if ((distanceX > 0 && distanceY < 0) || (distanceX < 0 && distanceY > 0))
-                {
-                    directionOfTarget.x = speed * (distanceX / (distanceX - distanceY));
-                    directionOfTarget.y = -speed * (distanceY / (distanceX - distanceY));
-                }
-                else
-                {
-                    directionOfTarget.x = speed * (distanceX / (distanceX + distanceY));
-                    directionOfTarget.y = -speed * (distanceY / (distanceX + distanceY));
-                }
-                anim.SetBool("isWalking", true);
                 transform.rotation = Quaternion.Euler(0F, 180F, 0F);
             }
             else
             {
-                if ((distanceX > 0 && distanceY < 0) || (distanceX < 0 && distanceY > 0))
-                {
-                    directionOfTarget.x = speed * (distanceX / (distanceX - distanceY));
-                    directionOfTarget.y = speed * (distanceY / (distanceX - distanceY));
-                }
-                else
-                {
-                    directionOfTarget.x = speed * (distanceX / (distanceX + distanceY));
-                    directionOfTarget.y = speed * (distanceY / (distanceX + distanceY));
-                }
-                anim.SetBool("isWalking", true);
                 transform.rotation = Quaternion.Euler(0F, 0F, 0F);
             }
+            transform.position = Vector2.MoveTowards(transform.position, target, speed);
+            
+            anim.SetBool("isWalking", true);
+            
         }
-        return directionOfTarget;
     }
 
     protected Vector3 MoveAwayFromTarget(Transform targetTransform)

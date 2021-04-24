@@ -44,4 +44,10 @@ public class Inventory: MonoBehaviour {
         items.Remove(item);
         OnItemChangedCallback.Invoke();
     }
+
+    public void Consume(Item item)
+    {
+        items.Remove(item);
+        OnItemChangedCallback.Invoke();
+    }
 }

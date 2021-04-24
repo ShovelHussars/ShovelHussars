@@ -47,7 +47,7 @@ public class Guard : Enemy
     protected override void Attack()
     {
         Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackPoint.position, attackRange, 0f, enemyLayers);
-        if (hitEnemies.Length != 0)
+        //if (hitEnemies.Length != 0)
             foreach (var enemy in hitEnemies)
             {
                 if (enemy.enabled)
@@ -69,8 +69,7 @@ public class Guard : Enemy
         anim.SetBool("isWalking", false);
         try
         {
-            direction = MoveTowardsTarget(LocateClosestEnemy().transform);
-            transform.Translate(direction);
+            MoveTowardsTarget(LocateClosestEnemy().transform);
         }
         catch (Exception)
         {

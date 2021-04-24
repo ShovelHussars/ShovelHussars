@@ -78,8 +78,7 @@ public class ZombieController : Enemy
         anim.SetBool("isWalking", false);
         if (distance < lookRadius)
         {
-            direction = MoveTowardsTarget(target);
-            transform.Translate(direction);
+            MoveTowardsTarget(target);
         }
         else
         {

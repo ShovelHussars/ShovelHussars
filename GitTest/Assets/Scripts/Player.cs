@@ -39,7 +39,7 @@ public class Player : Entity
         
         virtualCamera = mainCamera.GetComponent<CinemachineBrain>().ActiveVirtualCamera as CinemachineVirtualCamera;
         anim = GetComponent<Animator>();
-        currentHealth = maxHealth;
+        currentHealth = maxHealth-55f;
         currentCaptureLevel = defaultCaptureLevel;
         isInfected = false;
     }
@@ -240,6 +240,16 @@ public class Player : Entity
                 player.AddForce(force, ForceMode2D.Impulse);
                 time = currentTime + 5;
             }
+        }
+    }
+
+    public void Heal(float restore)
+    {
+        Debug.Log("Heal");
+        currentHealth += restore;
+        if(currentHealth > 100f)
+        {
+            currentHealth = 100f;
         }
     }
 }

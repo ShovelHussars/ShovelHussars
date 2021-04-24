@@ -89,16 +89,14 @@ public class DClass : Enemy
             randomLocation.z = transform.position.z;
             if (isTouchingWall)
             {
-                direction = MoveTowardsVector3(randomLocation);
-                transform.Translate(direction);
+                MoveTowardsVector3(randomLocation);
             }
         }
 
         if (Vector3.Distance(randomLocation,transform.position) > 0.1f)
         {
             
-            direction = MoveTowardsVector3(randomLocation);
-            transform.Translate(direction);
+            MoveTowardsVector3(randomLocation);
         }
         else
         {
@@ -131,8 +129,7 @@ public class DClass : Enemy
         GameObject closestEnemy = LocateClosestEnemy();
         if (closestEnemy != null)
         {
-            direction = MoveTowardsTarget(closestEnemy.transform);
-            transform.Translate(direction);
+            MoveTowardsTarget(closestEnemy.transform);
             Attack();
         }
         else

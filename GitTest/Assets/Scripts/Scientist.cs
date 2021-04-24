@@ -109,8 +109,7 @@ public class Scientist : Enemy
             }
             else if (!spooked)
             {
-                direction = MoveTowardsTarget(chosenGuard.transform);
-                transform.Translate(direction);
+                MoveTowardsTarget(chosenGuard.transform);
             }
             
         }

@@ -28,7 +28,7 @@ public class Entity : MonoBehaviour
 
     protected void EntityCaptureCooldown()
     {
-        if (currentCaptureLevel != 0f)
+        if (currentCaptureLevel > 0f)
         {
             currentCaptureLevel -= 0.5f;
         }
