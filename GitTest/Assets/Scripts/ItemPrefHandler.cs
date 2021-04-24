@@ -26,4 +26,16 @@ public class ItemPrefHandler : MonoBehaviour
         }
         return null;
     }
+
+    public GameObject FindPrefByName(string name)
+    {
+        foreach (var prefab in prefabs)
+        {
+            if (prefab.GetComponent<ItemPickup>().item.name == name)
+            {
+                return prefab;
+            }
+        }
+        return null;
+    }
 }

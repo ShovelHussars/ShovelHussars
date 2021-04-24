@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class DoorController : MonoBehaviour
 {
-    [SerializeField] string _nextLevel;
+    [SerializeField] bool nextLevel;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -28,6 +29,26 @@ public class DoorController : MonoBehaviour
 
     void GoToNextLevel()
     {
-        SceneManager.LoadScene(_nextLevel);
+        int y = SceneManager.GetActiveScene().buildIndex;
+        PlayerData playerData = new PlayerData(GameObject.FindObjectOfType<Player>());
+        SaveSystem.SavePlayerData(playerData);
+        
+        if (nextLevel)
+        {
+            if (SceneManager.sceneCountInBuildSettings - 1 == y)
+            {
+                string path = Application.persistentDataPath + "/Player.lvl";
+                File.Delete(path);
+                SceneManager.LoadScene(0);
+            }
+            else
+            {
+                SceneManager.LoadScene(y + 1);
+            }
+        }
+        else
+        {
+            SceneManager.LoadScene(y - 1);
+        }
     }
 }

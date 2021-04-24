@@ -12,4 +12,8 @@ public class ItemPickup : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    public void Add()
+    {
+        Inventory.instance.Add(item);
+    }
 }

@@ -231,7 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 040fab4a9a93a8a45b612593cddd9ac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nextLevel: TutorialLevel(3)
+  nextLevel: 1
 --- !u!1 &2671311599499422130
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,7 +242,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2671311599499422133}
   m_Layer: 0
-  m_Name: LevelBounds 1
+  m_Name: LevelBounds2Doors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1017,7 +1017,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 040fab4a9a93a8a45b612593cddd9ac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nextLevel: TutorialLevel(1)
+  nextLevel: 0
 --- !u!1 &2671311600587628386
 GameObject:
   m_ObjectHideFlags: 0
