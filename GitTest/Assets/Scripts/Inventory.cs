@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,7 +34,19 @@ public class Inventory: MonoBehaviour {
             return false;
         }
         items.Add(item);
-        OnItemChangedCallback.Invoke();
+        while (true)
+        {
+            try
+            {
+                OnItemChangedCallback.Invoke();
+                Debug.Log("Success");
+                break;
+            }
+            catch (Exception)
+            {
+                Debug.Log("I tried");
+            }
+        }
         return true;
     }
 

@@ -29,6 +29,7 @@ public class LevelController : MonoBehaviour
             {
                 player.Infect();
             }
+            
             foreach(var itemName in playerData.itemNames)
             {
                 GameObject pref = ItemPrefHandler.instance.FindPrefByName(itemName);
