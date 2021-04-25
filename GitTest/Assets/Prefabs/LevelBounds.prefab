@@ -821,8 +821,8 @@ GameObject:
   - component: {fileID: 7835641106970648940}
   - component: {fileID: 7835641106970648943}
   m_Layer: 0
-  m_Name: DoorOpenVertical
-  m_TagString: Untagged
+  m_Name: RightOpenDoor
+  m_TagString: RightDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -7,26 +7,39 @@ using UnityEngine;
 public class LevelData
 {
     public string sceneName;
-    public float[] lastPlayerPosition;
-    public string[] entityNames;
+    public string[] enemyNames;
+    public bool[] isEnabled;
+    public float[][] enemyPositions;
+    public float[] enemyRotation;
     public string[] itemNames;
+    public float[][] itemPositions;
 
-    public LevelData(string _sceneName, Entity[] entities, ItemPickup[] items, Player player)
+    public LevelData(string _sceneName, Enemy[] enemies, ItemPickup[] items)
     {
         sceneName = _sceneName;
-        lastPlayerPosition = new float[3];
-        lastPlayerPosition[0] = player.transform.position.x;
-        lastPlayerPosition[1] = player.transform.position.y;
-        lastPlayerPosition[2] = player.transform.position.z;
-        entityNames = new string[entities.Length];
-        for(int i = 0; i < entities.Length; ++i)
-        {
-            entityNames[i] = entities[i].name;
-        }
+        enemyNames = new string[enemies.Length];
+        isEnabled = new bool[enemies.Length];
+        enemyPositions = new float[enemies.Length][];
+        enemyRotation = new float[enemies.Length];
         itemNames = new string[items.Length];
+        itemPositions = new float[items.Length][];
+
+        for(int i = 0; i < enemies.Length; ++i)
+        {
+            enemyNames[i] = enemies[i].name;
+            isEnabled[i] = enemies[i].enabled;
+            enemyPositions[i] = new float[2];
+            enemyPositions[i][0] = enemies[i].transform.position.x;
+            enemyPositions[i][1] = enemies[i].transform.position.y;
+            enemyRotation[i] = enemies[i].transform.rotation.y;
+        }
+        
         for (int i = 0; i < items.Length; ++i)
         {
-            itemNames[i] = items[i].name;
+            itemNames[i] = items[i].item.name;
+            itemPositions[i] = new float[2];
+            itemPositions[i][0] = items[i].transform.position.x;
+            itemPositions[i][1] = items[i].transform.position.y;
         }
     }
 }

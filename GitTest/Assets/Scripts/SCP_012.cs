@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class SCP_012 : MonoBehaviour
 {
-    private float effectDistance = 4f;
-    private float damageDistance = 0.5f;
+    private readonly float effectDistance = 4f;
+    private readonly float damageDistance = 0.5f;
     public LayerMask entityLayers;
 
     void FixedUpdate()

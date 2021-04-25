@@ -39,7 +39,6 @@ public class Inventory: MonoBehaviour {
             try
             {
                 OnItemChangedCallback.Invoke();
-                Debug.Log("Success");
                 break;
             }
             catch (Exception)

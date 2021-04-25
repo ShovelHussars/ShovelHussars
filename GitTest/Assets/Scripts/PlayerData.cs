@@ -9,8 +9,9 @@ public class PlayerData
     public float health;
     public bool isInfected;
     public string[] itemNames;
+    public bool leftOnRightSide = true;
 
-    public PlayerData(Player player)
+    public PlayerData(Player player, bool _leftOnRightSide)
     {
         health = player.GetCurrentHealth();
         isInfected = player.GetIsInfected();
@@ -20,5 +21,6 @@ public class PlayerData
         {
             itemNames[i] = temp[i].name;
         }
+        leftOnRightSide = _leftOnRightSide;
     }
 }

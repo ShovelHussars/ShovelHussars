@@ -7,7 +7,7 @@ public static class SaveSystem
     public static void SaveLevelData(string sceneName, LevelData data)
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath+"/Levels/"+sceneName+".lvl";
+        string path = Application.persistentDataPath+"/"+sceneName+".lvl";
         FileStream stream = new FileStream(path, FileMode.Create);
 
         formatter.Serialize(stream, data);
@@ -16,7 +16,7 @@ public static class SaveSystem
 
     public static LevelData LoadLevelData(string sceneName)
     {
-        string path = Application.persistentDataPath + "/Levels/" + sceneName + ".lvl";
+        string path = Application.persistentDataPath + "/" + sceneName + ".lvl";
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();
@@ -29,7 +29,7 @@ public static class SaveSystem
         }
         else
         {
-            Debug.LogError("No such save yet.");
+            Debug.Log("No such save yet.");
             return null;
         }
     }
@@ -59,7 +59,7 @@ public static class SaveSystem
         }
         else
         {
-            Debug.LogError("No such save yet.");
+            Debug.Log("No such save yet.");
             return null;
         }
     }

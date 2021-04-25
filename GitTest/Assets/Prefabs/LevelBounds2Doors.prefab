@@ -122,8 +122,8 @@ GameObject:
   - component: {fileID: 2671311599451605130}
   - component: {fileID: 2671311599451605133}
   m_Layer: 0
-  m_Name: DoorOpenVertical
-  m_TagString: Untagged
+  m_Name: RightOpenDoor
+  m_TagString: RightDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -908,8 +908,8 @@ GameObject:
   - component: {fileID: 2671311600542112412}
   - component: {fileID: 2671311600542112415}
   m_Layer: 0
-  m_Name: DoorOpenVertical (1)
-  m_TagString: Untagged
+  m_Name: LeftOpenDoor
+  m_TagString: LeftDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -21,7 +21,7 @@ public abstract class Enemy : Entity
     {
         this.enabled = false;
         animator.SetBool("isWalking", false);
-        transform.rotation = Quaternion.Euler(0f, 0f, 90f);
+        transform.rotation = Quaternion.Euler(0f, transform.rotation.y, 90f);
     }
 
     public new void TakeDamage(float damage)
