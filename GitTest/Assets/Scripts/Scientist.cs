@@ -61,10 +61,16 @@ public class Scientist : Enemy
 
     void Update()
     {
-        if(currentHealth <= 0)
+        if (firstupdate)
+        {
+            currentHealth = maxHealth;
+        }
+
+        if (currentHealth <= 0)
         {
             Die(anim);
         }
+        firstupdate = false;
     }
 
     private void FixedUpdate()

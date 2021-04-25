@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 6377460787333358050}
   - component: {fileID: 6377460787333358051}
   m_Layer: 3
-  m_Name: ZmobieScientist
+  m_Name: ZombieScientist
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

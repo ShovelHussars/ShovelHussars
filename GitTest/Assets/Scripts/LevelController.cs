@@ -33,8 +33,8 @@ public class LevelController : MonoBehaviour
             {
                 player.Infect();
             }
-            
-            foreach(var itemName in playerData.itemNames)
+
+            foreach (var itemName in playerData.itemNames)
             {
                 GameObject pref = ItemPrefHandler.instance.FindPrefByName(itemName);
                 pref.GetComponent<ItemPickup>().Add();
@@ -49,18 +49,18 @@ public class LevelController : MonoBehaviour
             }
         }
 
-        if(levelData != null)
+        if (levelData != null)
         {
             foreach (var item in temp)
             {
                 items.Add(item);
-                
+
             }
             itemNames = new List<string>();
             foreach (var item in levelData.itemNames)
             {
                 itemNames.Add(item);
-                
+
             }
             itemPositions = new List<float[]>();
             foreach (var pos in levelData.itemPositions)
@@ -70,13 +70,15 @@ public class LevelController : MonoBehaviour
 
             for (int i = 0; i < levelData.enemyNames.Length; ++i)
             {
-                for(int j = 0; j < enemies.Length; j++)
+
+                for (int j = 0; j < enemies.Length; j++)
                 {
                     if (enemies[j].name == levelData.enemyNames[i])
                     {
+                        
                         if (!levelData.isEnabled[i])
                         {
-                            enemies[j].TakeDamage(200f);
+                            enemies[j].SetMaxHealth(-200f);
                         }
                         Vector2 newPosition = new Vector2(levelData.enemyPositions[i][0], levelData.enemyPositions[i][1]);
                         enemies[j].transform.position = newPosition;
@@ -101,12 +103,12 @@ public class LevelController : MonoBehaviour
                     }
                 }
             }
-            for(int i = 0; i < itemNames.Count; ++i)
+            for (int i = 0; i < itemNames.Count; ++i)
             {
                 GameObject pref = ItemPrefHandler.instance.FindPrefByName(itemNames[i]);
                 Instantiate(pref, new Vector2(itemPositions[i][0], itemPositions[i][1]), transform.rotation);
             }
-            foreach(var item in items)
+            foreach (var item in items)
             {
                 item.Destroy();
             }

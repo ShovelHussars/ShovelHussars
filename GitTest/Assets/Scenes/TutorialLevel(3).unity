@@ -176,7 +176,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6377460787333358053, guid: cee882f1e464eba4d81f341cb1a3252c, type: 3}
       propertyPath: m_Name
-      value: ZmobieScientist
+      value: ZombieScientist
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cee882f1e464eba4d81f341cb1a3252c, type: 3}

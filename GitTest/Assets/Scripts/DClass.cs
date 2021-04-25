@@ -24,17 +24,21 @@ public class DClass : Enemy
             allEnemies.Add(entity);
         }
         anim = GetComponent<Animator>();
-        currentHealth = maxHealth;
         direction.z = 0F;
     }
 
     void Update()
     {
+        if (firstupdate)
+        {
+            currentHealth = maxHealth;
+        }
         EntityCaptureCooldown();
         if(currentHealth <= 0 || currentCaptureLevel >= 100f)
         {
             Die(anim);
         }
+        firstupdate = false;
     }
 
     private void FixedUpdate()

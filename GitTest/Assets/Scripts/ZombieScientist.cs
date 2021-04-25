@@ -2,16 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ZombieController : Enemy
+public class ZombieScientist : Enemy
 {
     public float lookRadius;
 
     private readonly float attackCooldown = 5f;
     private float nextAttack = -1f;
     Transform target;
+    
 
     void Start()
     {
+        
         type = "Zombie";
         speed = 0.01f;
         Entity[] temp = GameObject.FindObjectsOfType<Entity>();
@@ -22,16 +24,21 @@ public class ZombieController : Enemy
         }
         target = LocateClosestEnemy().transform;
         anim = GetComponent<Animator>();
-        currentHealth = maxHealth;
+        
         direction.z = 0F;
     }
 
     void Update()
     {
-        if(currentHealth <= 0)
+        if (firstupdate)
+        {
+            currentHealth = maxHealth;
+        }
+        if (currentHealth <= 0)
         {
             Die(anim);
         }
+        firstupdate = false;
     }
 
     void FixedUpdate()
@@ -59,7 +66,7 @@ public class ZombieController : Enemy
             Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackPoint.position, attackRange, 0f, enemyLayers);
             foreach (var enemy in hitEnemies)
             {
-                if (enemy.enabled)
+                if (enemy.enabled && enemy.GetComponent<Enemy>() != this)
                 {
 
                     enemy.GetComponent<Entity>().TakeDamage(20f);

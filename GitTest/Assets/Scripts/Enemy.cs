@@ -14,6 +14,7 @@ public abstract class Enemy : Entity
     protected float distanceX, distanceY;
     protected Vector3 direction;
     protected string type;
+    protected bool firstupdate = true;
 
     abstract protected void Attack();
 
@@ -122,4 +123,9 @@ public abstract class Enemy : Entity
     }
 
     protected abstract void MovementController();
+
+    public void SetMaxHealth(float health)
+    {
+        maxHealth = health;
+    }
 }

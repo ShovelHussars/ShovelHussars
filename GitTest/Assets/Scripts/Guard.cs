@@ -9,7 +9,6 @@ public class Guard : Enemy
     void Start()
     {
         type = "Guard";
-        currentHealth = maxHealth;
         Entity[] temp = GameObject.FindObjectsOfType<Entity>();
         allEnemies = new List<Entity>();
         foreach (var entity in temp)
@@ -26,12 +25,17 @@ public class Guard : Enemy
 
     void Update()
     {
-        if(currentHealth <= 0)
+        if (firstupdate)
+        {
+            currentHealth = maxHealth;
+        }
+        if (currentHealth <= 0)
         {
             Die(anim);
         }
          
         Attack();
+        firstupdate = false;
     }
 
     private void OnDrawGizmosSelected()
