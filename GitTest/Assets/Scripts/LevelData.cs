@@ -14,9 +14,8 @@ public class LevelData
     public string[] itemNames;
     public float[][] itemPositions;
 
-    public LevelData(string _sceneName, Enemy[] enemies, ItemPickup[] items)
+    public LevelData(Enemy[] enemies, ItemPickup[] items)
     {
-        sceneName = _sceneName;
         enemyNames = new string[enemies.Length];
         isEnabled = new bool[enemies.Length];
         enemyPositions = new float[enemies.Length][];
