@@ -139,7 +139,6 @@ public class LevelController : MonoBehaviour
             {
                 if (enemy.enabled)
                 {
-                    //print("false");
                     return false;
                 }
             }

@@ -46,7 +46,6 @@ public class ZombieScientist : Enemy
         target = LocateClosestEnemy().transform;
         MovementController();
         Attack();
-        
     }
 
     private void OnDrawGizmosSelected()
@@ -66,13 +65,11 @@ public class ZombieScientist : Enemy
             Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackPoint.position, attackRange, 0f, enemyLayers);
             foreach (var enemy in hitEnemies)
             {
-                if (enemy.enabled && enemy.GetComponent<Enemy>() != this)
+                if (enemy.enabled && enemy.GetComponent<Entity>() != this)
                 {
-
                     enemy.GetComponent<Entity>().TakeDamage(20f);
                     enemy.GetComponent<Entity>().Infect();
                     nextAttack = currentTime + attackCooldown;
-
                 }
             }
         }
@@ -80,7 +77,7 @@ public class ZombieScientist : Enemy
 
     override protected void MovementController()
     {
-        float distance = Vector3.Distance(target.position, transform.position);
+        float distance = Vector2.Distance(target.position, transform.position);
 
         anim.SetBool("isWalking", false);
         if (distance < lookRadius)
