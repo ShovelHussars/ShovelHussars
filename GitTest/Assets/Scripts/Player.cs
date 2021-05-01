@@ -151,7 +151,7 @@ public class Player : MonoBehaviour
 
     }
 
-    public void takeDamage(float damage)
+    public void TakeDamage(float damage)
     {
         currentHealth -= damage;
     }
@@ -184,41 +184,18 @@ public class Player : MonoBehaviour
 
         Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackPoint.position, attackRange, 0f, enemyLayers);
 
-        foreach(Collider2D enemy in hitEnemies)
+        foreach (Collider2D enemy in hitEnemies)
         {
             Vector2 force;
             force.x = 20;
-            try
+
+            if (enemy.GetComponent<Enemy>().transform.position.x < transform.position.x)
             {
-                if (enemy.GetComponent<Guard>().transform.position.x < transform.position.x)
-                {
-                    force.x = -20;
-                }
-                force.y = 0;
-                enemy.GetComponent<Rigidbody2D>().AddForce(force, ForceMode2D.Impulse);
-                enemy.GetComponent<Guard>().takeDamage(50f);
-
+                force.x = -20;
             }
-            catch (Exception e)
-            {
-
-            }
-
-            try
-            {
-                if (enemy.GetComponent<ZombieController>().transform.position.x < transform.position.x)
-                {
-                    force.x = -20;
-                }
-                force.y = 0;
-                enemy.GetComponent<Rigidbody2D>().AddForce(force, ForceMode2D.Impulse);
-                enemy.GetComponent<ZombieController>().takeDamage(50f);
-
-            }
-            catch (Exception e)
-            {
-
-            }
+            force.y = 0;
+            enemy.GetComponent<Rigidbody2D>().AddForce(force, ForceMode2D.Impulse);
+            enemy.GetComponent<Enemy>().TakeDamage(50f);
 
         }
     }

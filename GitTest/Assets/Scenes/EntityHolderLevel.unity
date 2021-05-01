@@ -2542,12 +2542,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee3d127fd6802954dbcd290d5caee96a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookRadius: 2
   attackPoint: {fileID: 114826858}
   attackRange: {x: 0.35, y: 0.5}
   enemyLayers:
     serializedVersion: 2
     m_Bits: 64
+  lookRadius: 2
 --- !u!50 &1382862265
 Rigidbody2D:
   serializedVersion: 4
@@ -3474,7 +3474,6 @@ MonoBehaviour:
   enemyLayers:
     serializedVersion: 2
     m_Bits: 64
-  Maxhealth: 100
 --- !u!95 &1657561606
 Animator:
   serializedVersion: 3
@@ -3733,6 +3732,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6337d852693d4274fba78396f631fc01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackPoint: {fileID: 0}
+  attackRange: {x: 0, y: 0}
+  enemyLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  scareRange: 3
 --- !u!50 &1769815318
 Rigidbody2D:
   serializedVersion: 4
@@ -3746,7 +3751,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 10
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}

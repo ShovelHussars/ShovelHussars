@@ -250,7 +250,7 @@ GameObject:
   - component: {fileID: 78125030}
   m_Layer: 0
   m_Name: WallBottomLeftCorner
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -875,7 +875,7 @@ GameObject:
   - component: {fileID: 300756697}
   m_Layer: 0
   m_Name: WallTopLeftCorner
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1122,7 +1122,7 @@ GameObject:
   - component: {fileID: 328656900}
   m_Layer: 0
   m_Name: WallHorizontal (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1313,7 +1313,7 @@ GameObject:
   - component: {fileID: 449343761}
   m_Layer: 0
   m_Name: WallHorizontal
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1419,7 +1419,7 @@ GameObject:
   - component: {fileID: 468754939}
   m_Layer: 0
   m_Name: WallVertical (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1783,12 +1783,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee3d127fd6802954dbcd290d5caee96a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookRadius: 2
   attackPoint: {fileID: 2079603359}
   attackRange: {x: 0.35, y: 0.5}
   enemyLayers:
     serializedVersion: 2
     m_Bits: 64
+  lookRadius: 2
 --- !u!50 &570633421
 Rigidbody2D:
   serializedVersion: 4
@@ -2418,7 +2418,7 @@ GameObject:
   - component: {fileID: 978449902}
   m_Layer: 0
   m_Name: WallVertical
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2727,7 +2727,7 @@ GameObject:
   - component: {fileID: 1042693396}
   m_Layer: 0
   m_Name: WallTopRightCorner
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4098,7 +4098,7 @@ GameObject:
   - component: {fileID: 1445338755}
   m_Layer: 0
   m_Name: WallBottomRightCorner
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5809,7 +5809,7 @@ GameObject:
   - component: {fileID: 1972666139}
   m_Layer: 0
   m_Name: WallVertical (3)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5918,7 +5918,7 @@ GameObject:
   - component: {fileID: 2044277041}
   m_Layer: 0
   m_Name: WallVertical (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6346,4 +6346,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 040fab4a9a93a8a45b612593cddd9ac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nextLevel: TutorialLevel(3)
+  _nextLevel: MainMenu
