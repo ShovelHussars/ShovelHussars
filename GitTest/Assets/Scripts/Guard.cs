@@ -8,24 +8,35 @@ public class Guard : Enemy
 
     void Start()
     {
-        currenthealth = maxHealth;
+        type = "Guard";
+        Entity[] temp = GameObject.FindObjectsOfType<Entity>();
+        allEnemies = new List<Entity>();
+        foreach (var entity in temp)
+        {
+            if (!entity.CompareTag("Guard") && !entity.CompareTag("Scientist"))
+            {
+                allEnemies.Add(entity.GetComponent<Entity>());
+            }
+        }
         anim = GetComponent<Animator>();
         direction.z = 0F;
-        player = GameObject.FindObjectOfType<Player>();
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-        if(currenthealth <= 0)
+        if (firstupdate)
+        {
+            currentHealth = maxHealth;
+        }
+        if (currentHealth <= 0)
         {
             Die(anim);
         }
          
         Attack();
+        firstupdate = false;
     }
-
-    
 
     private void OnDrawGizmosSelected()
     {
@@ -40,67 +51,33 @@ public class Guard : Enemy
     protected override void Attack()
     {
         Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(attackPoint.position, attackRange, 0f, enemyLayers);
-        if (hitEnemies.Length != 0)
-            if (hitEnemies[0].enabled)
+        //if (hitEnemies.Length != 0)
+            foreach (var enemy in hitEnemies)
             {
-                hitEnemies[0].GetComponent<Player>().CapturePlayer();
-            }
-            else
-            {
-                hitEnemies[0].GetComponent<Player>().captureScreen.SetActive(false);
+                if (enemy.enabled)
+                {
+                    if (enemy.CompareTag("Player"))
+                    {
+                        enemy.GetComponent<Player>().CaptureEntity();
+                    }
+                    else
+                    {
+                        enemy.GetComponent<Entity>().CaptureEntity();
+                    }
+                }
             }
     }
 
     override protected void MovementController()
     {
         anim.SetBool("isWalking", false);
-        if (player != null)
+        try
         {
-            playerPosition = player.transform.position;
-            distanceX = GetComponent<Rigidbody2D>().transform.position.x - playerPosition.x;
-            distanceY = GetComponent<Rigidbody2D>().transform.position.y - playerPosition.y;
-            //print("X=" + distanceX + " Y=" + distanceY);
-            if (distanceX > 0)
-            {
-                if ((distanceX > 0 && distanceY < 0) || (distanceX < 0 && distanceY > 0))
-                {
-                    direction.x = speed * (distanceX / (distanceX - distanceY));
-                    direction.y = -speed * (distanceY / (distanceX - distanceY));
-                    //print(direction.x + ", " + direction.y);
-                }
-                else
-                {
-                    direction.x = speed * (distanceX / (distanceX + distanceY));
-                    direction.y = -speed * (distanceY / (distanceX + distanceY));
-                    //print(direction.x + ", " + direction.y);
-                }
-                anim.SetBool("isWalking", true);
-                transform.rotation = Quaternion.Euler(0F, 180F, 0F);
-            }
-            else
-            {
-                if ((distanceX > 0 && distanceY < 0) || (distanceX < 0 && distanceY > 0))
-                {
-                    direction.x = speed * (distanceX / (distanceX - distanceY));
-                    direction.y = speed * (distanceY / (distanceX - distanceY));
-                    //print(direction.x + ", " + direction.y);
-                }
-                else
-                {
-                    direction.x = speed * (distanceX / (distanceX + distanceY));
-                    direction.y = speed * (distanceY / (distanceX + distanceY));
-                    //print(direction.x + ", " + direction.y);
-                }
-                anim.SetBool("isWalking", true);
-                transform.rotation = Quaternion.Euler(0F, 0F, 0F);
-            }
-            //direction.x = 0.01F;
-            //direction.y = 0.01F;
-            transform.Translate(direction);
+            MoveTowardsTarget(LocateClosestEnemy().transform);
         }
-        else
+        catch (Exception)
         {
-            //print("NO PLAYER!");
         }
+       
     }
 }

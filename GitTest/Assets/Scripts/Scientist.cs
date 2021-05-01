@@ -12,14 +12,19 @@ public class Scientist : Enemy
     private bool spooked = false;
     private bool allGuardsDead = false;
     private bool isTouchingWall = false;
-    private int guardIndex = 0;
-    private Vector2 targetPosition;
 
     void Start()
     {
+        type = "Scientist";
         anim = GetComponent<Animator>();
         guards = GameObject.FindObjectsOfType<Guard>();
-        player = GameObject.FindObjectOfType<Player>();
+        Entity[] temp = GameObject.FindObjectsOfType<Entity>();
+        allEnemies = new List<Entity>();
+        foreach (var entity in temp)
+        {
+            if (!entity.CompareTag("Guard") && !entity.CompareTag("Scientist"))
+                allEnemies.Add(entity.GetComponent<Entity>());
+        }
 
         chosenGuard = LookForGuard();
         if(chosenGuard == null)
@@ -28,12 +33,11 @@ public class Scientist : Enemy
         }
 
         direction.z = 0F;
-        currenthealth = maxHealth;
-        direction.z = 0F;
+        currentHealth = maxHealth;
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
         if (CollidedWitwall(collision))
         {
@@ -48,24 +52,26 @@ public class Scientist : Enemy
     private bool CollidedWitwall(Collision2D collision)
     {
         GameObject wall = collision.gameObject;
-        if(wall.tag.Equals("Wall"))
+        if(wall.CompareTag("Wall") || wall.CompareTag("Door"))
         {
             return true;
         }
         return false;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(currenthealth <= 0)
+        if (firstupdate)
+        {
+            currentHealth = maxHealth;
+        }
+
+        if (currentHealth <= 0)
         {
             Die(anim);
         }
-
-        
+        firstupdate = false;
     }
-
 
     private void FixedUpdate()
     {
@@ -104,10 +110,12 @@ public class Scientist : Enemy
 
             if(spooked && !isTouchingWall)
             {
-                RunFromDClass();
-            }else if (!spooked)
+                direction = MoveAwayFromTarget(LocateClosestEnemy().transform);
+                transform.Translate(direction);
+            }
+            else if (!spooked)
             {
-                RunTowardsGuard();
+                MoveTowardsTarget(chosenGuard.transform);
             }
             
         }
@@ -126,7 +134,8 @@ public class Scientist : Enemy
 
             if (spooked && !isTouchingWall)
             {
-                RunFromDClass();
+                direction = MoveAwayFromTarget(LocateClosestEnemy().transform);
+                transform.Translate(direction);
             }
             else
             {
@@ -145,97 +154,6 @@ public class Scientist : Enemy
             }
         }
         return null;
-    }
-
-
-    private void RunTowardsGuard()
-    {
-        targetPosition = chosenGuard.transform.position;
-        distanceX = GetComponent<Rigidbody2D>().transform.position.x - targetPosition.x;
-        distanceY = GetComponent<Rigidbody2D>().transform.position.y - targetPosition.y;
-        //print("X=" + distanceX + " Y=" + distanceY);
-        if (distanceX > 0)
-        {
-            if ((distanceX > 0 && distanceY < 0) || (distanceX < 0 && distanceY > 0))
-            {
-                direction.x = speed * (distanceX / (distanceX - distanceY));
-                direction.y = -speed * (distanceY / (distanceX - distanceY));
-                //print(direction.x + ", " + direction.y);
-            }
-            else
-            {
-                direction.x = speed * (distanceX / (distanceX + distanceY));
-                direction.y = -speed * (distanceY / (distanceX + distanceY));
-                //print(direction.x + ", " + direction.y);
-            }
-            anim.SetBool("isWalking", true);
-            transform.rotation = Quaternion.Euler(0F, 180F, 0F);
-        }
-        else
-        {
-            if ((distanceX > 0 && distanceY < 0) || (distanceX < 0 && distanceY > 0))
-            {
-                direction.x = speed * (distanceX / (distanceX - distanceY));
-                direction.y = speed * (distanceY / (distanceX - distanceY));
-                //print(direction.x + ", " + direction.y);
-            }
-            else
-            {
-                direction.x = speed * (distanceX / (distanceX + distanceY));
-                direction.y = speed * (distanceY / (distanceX + distanceY));
-                //print(direction.x + ", " + direction.y);
-            }
-            anim.SetBool("isWalking", true);
-            transform.rotation = Quaternion.Euler(0F, 0F, 0F);
-        }
-        //direction.x = 0.01F;
-        //direction.y = 0.01F;
-        transform.Translate(direction);
-    }
-
-    private void RunFromDClass()
-    {
-        targetPosition = player.transform.position;
-        distanceX = GetComponent<Rigidbody2D>().transform.position.x - targetPosition.x;
-        distanceY = GetComponent<Rigidbody2D>().transform.position.y - targetPosition.y;
-        //print("X=" + distanceX + " Y=" + distanceY);
-        if (distanceX > 0)
-        {
-            if ((distanceX > 0 && distanceY < 0) || (distanceX < 0 && distanceY > 0))
-            {
-                direction.x = speed * (distanceX / (distanceX - distanceY));
-                direction.y = speed * (distanceY / (distanceX - distanceY));
-                //print(direction.x + ", " + direction.y);
-            }
-            else
-            {
-                direction.x = speed * (distanceX / (distanceX + distanceY));
-                direction.y = speed * (distanceY / (distanceX + distanceY));
-                //print(direction.x + ", " + direction.y);
-            }
-            anim.SetBool("isWalking", true);
-            transform.rotation = Quaternion.Euler(0F, 0F, 0F);
-        }
-        else
-        {
-            if ((distanceX > 0 && distanceY < 0) || (distanceX < 0 && distanceY > 0))
-            {
-                direction.x = speed * (distanceX / (distanceX - distanceY));
-                direction.y = -speed * (distanceY / (distanceX - distanceY));
-                //print(direction.x + ", " + direction.y);
-            }
-            else
-            {
-                direction.x = speed * (distanceX / (distanceX + distanceY));
-                direction.y = -speed * (distanceY / (distanceX + distanceY));
-                //print(direction.x + ", " + direction.y);
-            }
-            anim.SetBool("isWalking", true);
-            transform.rotation = Quaternion.Euler(0F, 180F, 0F);
-        }
-        //direction.x = 0.01F;
-        //direction.y = 0.01F;
-        transform.Translate(direction);
     }
 
     protected override void Attack(){}

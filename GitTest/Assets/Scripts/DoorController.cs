@@ -1,13 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class DoorController : MonoBehaviour
 {
-    [SerializeField] string _nextLevel;
-
+    [SerializeField] bool nextLevel;
+    Player player;
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (CollidedWitPlayer(collision))
@@ -18,8 +19,8 @@ public class DoorController : MonoBehaviour
 
     private bool CollidedWitPlayer(Collision2D collision)
     {
-        Player player = collision.gameObject.GetComponent<Player>();
-        if(player != null && player.tag.Equals("Player"))
+        player = collision.gameObject.GetComponent<Player>();
+        if(player != null && player.CompareTag("Player"))
         {
             return true;
         }
@@ -28,6 +29,39 @@ public class DoorController : MonoBehaviour
 
     void GoToNextLevel()
     {
-        SceneManager.LoadScene(_nextLevel);
+        int y = SceneManager.GetActiveScene().buildIndex;
+        
+        Enemy[] enemies = GameObject.FindObjectsOfType<Enemy>();
+        ItemPickup[] items = GameObject.FindObjectsOfType<ItemPickup>();
+        LevelData levelData = new LevelData(SceneManager.GetActiveScene().name, enemies, items);
+        SaveSystem.SaveLevelData(SceneManager.GetActiveScene().name, levelData);
+
+
+        if (nextLevel)
+        {
+            if (SceneManager.sceneCountInBuildSettings - 1 == y)
+            {
+                string path = Application.persistentDataPath;
+                File.Delete(path + "/Player.lvl");
+                for(int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
+                {
+                    File.Delete(path + "/TutorialLevel(" + i + ").lvl");
+                }
+                SceneManager.LoadScene(0);
+            }
+            else
+            {
+                PlayerData playerData = new PlayerData(GameObject.FindObjectOfType<Player>(), true);
+                SaveSystem.SavePlayerData(playerData);
+                SceneManager.LoadScene(y + 1);
+            }
+        }
+        else
+        {
+            PlayerData playerData = new PlayerData(GameObject.FindObjectOfType<Player>(), false);
+            SaveSystem.SavePlayerData(playerData);
+            Debug.Log("About to load prev Scene");
+            SceneManager.LoadScene(y - 1);
+        }
     }
 }

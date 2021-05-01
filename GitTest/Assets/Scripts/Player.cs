@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player : MonoBehaviour
+public class Player : Entity
 {
     public GameObject deathScreen;
     public GameObject captureScreen;
@@ -14,18 +14,29 @@ public class Player : MonoBehaviour
     public Transform attackPoint;
     public Vector2 attackRange;
     public LayerMask enemyLayers;
+    public LayerMask itemLayers;
     public Camera mainCamera;
     private static CinemachineVirtualCamera virtualCamera;
-    private bool isInfected;
-    private float currentCaptureLevel;
-    private float currentHealth;
     private static float time = -10F;
     public float defaultCaptureLevel = 0f;
-    public float maxHealth = 100f;
-
+    public PolygonCollider2D limits;
+    private float maximumOrtographicSize;
+    public float pickupRadius = 0.5f;
 
     void Start()
     {
+        
+        float wide;
+        float high;
+        if((wide = limits.bounds.size.x*Screen.currentResolution.height/Screen.currentResolution.width/2) > (high=limits.bounds.size.y / 2))
+        {
+            maximumOrtographicSize = high;
+        }
+        else
+        {
+            maximumOrtographicSize = wide;
+        }
+        
         virtualCamera = mainCamera.GetComponent<CinemachineBrain>().ActiveVirtualCamera as CinemachineVirtualCamera;
         anim = GetComponent<Animator>();
         currentHealth = maxHealth;
@@ -39,21 +50,27 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        PlayerCaptureCooldown();
+        
+        EntityCaptureCooldown();
+
 
         if(currentCaptureLevel > 0)
         {
             captureScreen.SetActive(true);
+        }
+        else
+        {
+            captureScreen.SetActive(false);
         }
 
         if(currentHealth <= 0 || currentCaptureLevel >= 100f)
         {
             Die();
         }
-        
+
         if(Input.GetAxisRaw("Mouse ScrollWheel") < 0)
         {
-            if(virtualCamera.m_Lens.OrthographicSize < 3f)
+            if(virtualCamera.m_Lens.OrthographicSize < maximumOrtographicSize-0.05)
                 virtualCamera.m_Lens.OrthographicSize += 0.05f;
         }
 
@@ -63,6 +80,10 @@ public class Player : MonoBehaviour
                 virtualCamera.m_Lens.OrthographicSize -= 0.05f;
         }
 
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            PickUpItem();
+        }
 
         if (Input.GetKey(KeyCode.A))
         {
@@ -75,10 +96,10 @@ public class Player : MonoBehaviour
 
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.S))
         {
-            anim.SetBool("isRunning", true);
+            anim.SetBool("isWalking", true);
         }else
         {
-            anim.SetBool("isRunning", false);
+            anim.SetBool("isWalking", false);
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -88,6 +109,17 @@ public class Player : MonoBehaviour
 
         
     }
+
+    private void PickUpItem()
+    {
+        Collider2D[] nearItems = Physics2D.OverlapCircleAll(new Vector2(transform.position.x,transform.position.y-0.45f), pickupRadius, itemLayers);
+        if (nearItems.Length != 0)
+        {
+            nearItems[0].GetComponent<ItemPickup>().PickUp();
+        }
+        
+    }
+
     void FixedUpdate()
     {
         float speed = 0.08F;
@@ -151,11 +183,6 @@ public class Player : MonoBehaviour
 
     }
 
-    public void TakeDamage(float damage)
-    {
-        currentHealth -= damage;
-    }
-
     private void Die()
     {
         captureScreen.SetActive(false);
@@ -163,18 +190,9 @@ public class Player : MonoBehaviour
         this.enabled = false;
     }
 
-    private void PlayerCaptureCooldown()
+    public new void CaptureEntity()
     {
-        if(currentCaptureLevel != 0f)
-        {
-            currentCaptureLevel-= 0.5f;
-            captureScreen.SetActive(false);
-        }
-    }
-
-    public void CapturePlayer()
-    {
-        currentCaptureLevel += 1f;
+        currentCaptureLevel += 0.76f;
         slider.value = currentCaptureLevel;
     }
 
@@ -188,7 +206,7 @@ public class Player : MonoBehaviour
         {
             Vector2 force;
             force.x = 20;
-
+            
             if (enemy.GetComponent<Enemy>().transform.position.x < transform.position.x)
             {
                 force.x = -20;
@@ -203,6 +221,7 @@ public class Player : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireCube(attackPoint.position, attackRange);
+        Gizmos.DrawWireSphere(new Vector2(transform.position.x, transform.position.y - 0.45f), pickupRadius);
     }
 
     private static void Dash(float x, float y, Rigidbody2D player)
@@ -213,17 +232,38 @@ public class Player : MonoBehaviour
             
             if (currentTime > time)
             {
-                Vector2 force = new Vector2();
-                force.x = 2f*x;
-                force.y = 2f*y;
+                Vector2 force = new Vector2
+                {
+                    x = 2f * x,
+                    y = 2f * y
+                };
                 player.AddForce(force, ForceMode2D.Impulse);
                 time = currentTime + 5;
             }
         }
     }
 
-    public void Infect()
+    public void Heal(float restore)
     {
-        isInfected = true;
+        currentHealth += restore;
+        if(currentHealth > 100f)
+        {
+            currentHealth = 100f;
+        }
+    }
+
+    public float GetCurrentHealth()
+    {
+        return currentHealth;
+    }
+
+    public void SetCurrentHealth(float health)
+    {
+        currentHealth = health;
+    }
+
+    public bool GetIsInfected()
+    {
+        return isInfected;
     }
 }
