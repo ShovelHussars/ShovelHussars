@@ -9,14 +9,16 @@ TagManager:
   - MenuCamera
   - Guard
   - Door
+  - Scientist
+  - Wall
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Enemy
   - Water
   - UI
-  - 
+  - Player
   - 
   - 
   - 

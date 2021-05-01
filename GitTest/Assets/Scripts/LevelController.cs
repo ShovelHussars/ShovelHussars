@@ -6,12 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class LevelController : MonoBehaviour
 {
-    GameObject[] _enemies;
+    Guard[] _guards;
     GameObject[] _doors;
     // Start is called before the first frame update
     void Start()
     {
-        _enemies = GameObject.FindGameObjectsWithTag("Guard");
+        _guards = GameObject.FindObjectsOfType<Guard>();
         _doors = GameObject.FindGameObjectsWithTag("Door");
     }
 
@@ -35,13 +35,13 @@ public class LevelController : MonoBehaviour
 
     private bool EnemiesAreAllDead()
     {
-        if ((_enemies != null) && (_enemies.Length != 0))
+        if ((_guards != null) && (_guards.Length != 0))
         {
-            foreach (var enemy in _enemies)
+            foreach (var guard in _guards)
             {
-                if (enemy.gameObject.activeSelf)
+                if (guard.enabled)
                 {
-                    print("false");
+                    //print("false");
                     return false;
                 }
             }
