@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System;
 
 public static class SaveSystem
 {
@@ -61,6 +62,28 @@ public static class SaveSystem
         {
             Debug.Log("No such save yet.");
             return null;
+        }
+    }
+
+    public static void GenerateRandomMap(int length)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        for (int i = 0; i < length; ++i)
+        {
+            Debug.Log("Generating Random shit");
+            string path = Application.persistentDataPath + "/" + i+".lvl";
+            try
+            {
+                File.Delete(path + "/" + i + ".lvl");
+            }
+            catch (Exception)
+            {
+
+            }
+            FileStream stream = new FileStream(path, FileMode.Create);
+            LevelData data = RandomLevelMaker.instance.GenerateLevel();
+            formatter.Serialize(stream, data);
+            stream.Close();
         }
     }
 }

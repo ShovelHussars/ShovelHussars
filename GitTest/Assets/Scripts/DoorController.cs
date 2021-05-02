@@ -51,14 +51,14 @@ public class DoorController : MonoBehaviour
             }
             else
             {
-                PlayerData playerData = new PlayerData(GameObject.FindObjectOfType<Player>(), true, y);
+                PlayerData playerData = new PlayerData(GameObject.FindObjectOfType<Player>(), true, 0);
                 SaveSystem.SavePlayerData(playerData);
                 SceneManager.LoadScene(y + 1);
             }
         }
         else
         {
-            PlayerData playerData = new PlayerData(GameObject.FindObjectOfType<Player>(), false, y);
+            PlayerData playerData = new PlayerData(GameObject.FindObjectOfType<Player>(), false, 0);
             SaveSystem.SavePlayerData(playerData);
             Debug.Log("About to load prev Scene");
             SceneManager.LoadScene(y - 1);

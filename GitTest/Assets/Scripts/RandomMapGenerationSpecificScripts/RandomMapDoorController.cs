@@ -28,26 +28,39 @@ public class RandomMapDoorController : MonoBehaviour
 
     void GoToNextLevel()
     {
-        int y = SceneManager.GetActiveScene().buildIndex;
+        int y = player.currentLevel;
 
         Enemy[] enemies = GameObject.FindObjectsOfType<Enemy>();
         ItemPickup[] items = GameObject.FindObjectsOfType<ItemPickup>();
         LevelData levelData = new LevelData(enemies, items);
-        SaveSystem.SaveLevelData(SceneManager.GetActiveScene().name, levelData);
+        SaveSystem.SaveLevelData(y.ToString(), levelData);
 
 
         if (nextLevel)
         {
-            PlayerData playerData = new PlayerData(GameObject.FindObjectOfType<Player>(), true, y);
-            SaveSystem.SavePlayerData(playerData);
-            SceneManager.LoadScene(y);
+            if (y == LengthOfRandomRun.instance.lengthOfRandomRun - 1)
+            {
+                string path = Application.persistentDataPath;
+                File.Delete(path + "/Player.lvl");
+                for (int i = 0; i < LengthOfRandomRun.instance.lengthOfRandomRun; i++)
+                {
+                    File.Delete(path + "/" + i + ".lvl");
+                }
+                SceneManager.LoadScene(0);
+            }
+            else
+            {
+                PlayerData playerData = new PlayerData(GameObject.FindObjectOfType<Player>(), true, ++y);
+                SaveSystem.SavePlayerData(playerData);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
         }
         else
         {
-            PlayerData playerData = new PlayerData(GameObject.FindObjectOfType<Player>(), false, y);
+            PlayerData playerData = new PlayerData(GameObject.FindObjectOfType<Player>(), false, --y);
             SaveSystem.SavePlayerData(playerData);
             Debug.Log("About to load prev Scene");
-            SceneManager.LoadScene(y);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 }

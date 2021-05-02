@@ -34,25 +34,17 @@ public class LengthOfRandomRun: MonoBehaviour
 
     public void Regex(string input)
     {
-        while (true)
+        while (input.Length != 0)
         {
             try
             {
                 int a = Int32.Parse(input);
-                break;
+                return;
             }
             catch (Exception)
             {
-                if (input.Length != 0)
-                {
-                    input = input.Remove(input.Length - 1);
-                    inputBox.GetComponent<TMP_InputField>().text = input;
-                }
-                else
-                {
-                    inputBox.GetComponent<TMP_InputField>().text = input;
-                    break;
-                }
+                input = input.Remove(input.Length - 1);
+                inputBox.GetComponent<TMP_InputField>().text = input;
             }
         }
     }

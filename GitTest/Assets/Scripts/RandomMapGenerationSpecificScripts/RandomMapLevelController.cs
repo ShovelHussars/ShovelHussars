@@ -6,10 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class RandomMapLevelController : MonoBehaviour
 {
-    List<ItemPickup> items;
     List<String> itemNames;
     List<float[]> itemPositions;
     Enemy[] enemies;
+    List<float[]> enemyPositions;
+    List<bool> enemyState;
     GameObject[] _doors;
     LevelData levelData;
     PlayerData playerData;
@@ -19,15 +20,12 @@ public class RandomMapLevelController : MonoBehaviour
     {
         Debug.Log("Started");
         player = GameObject.FindObjectOfType<Player>();
-        enemies = GameObject.FindObjectsOfType<Enemy>();
         _doors = GameObject.FindGameObjectsWithTag("Door");
         playerData = SaveSystem.LoadPlayerData();
-        levelData = SaveSystem.LoadLevelData(SceneManager.GetActiveScene().name);
-        ItemPickup[] temp = GameObject.FindObjectsOfType<ItemPickup>();
-        items = new List<ItemPickup>();
 
         if (playerData != null)
         {
+            player.currentLevel = playerData.sceneIndex;
             player.SetCurrentHealth(playerData.health);
             if (playerData.isInfected)
             {
@@ -49,68 +47,77 @@ public class RandomMapLevelController : MonoBehaviour
             }
         }
 
+
+        levelData = SaveSystem.LoadLevelData(player.currentLevel.ToString());
+        
+
         if (levelData != null)
         {
-            foreach (var item in temp)
-            {
-                items.Add(item);
-
-            }
             itemNames = new List<string>();
             foreach (var item in levelData.itemNames)
             {
                 itemNames.Add(item);
 
             }
+
             itemPositions = new List<float[]>();
             foreach (var pos in levelData.itemPositions)
             {
-                itemPositions.Add(pos);
-            }
-
-            for (int i = 0; i < levelData.enemyNames.Length; ++i)
-            {
-
-                for (int j = 0; j < enemies.Length; j++)
+                if (pos[0] == 1000f)
                 {
-                    if (enemies[j].name == levelData.enemyNames[i])
-                    {
-
-                        if (!levelData.isEnabled[i])
-                        {
-                            enemies[j].SetMaxHealth(-200f);
-                        }
-                        Vector2 newPosition = new Vector2(levelData.enemyPositions[i][0], levelData.enemyPositions[i][1]);
-                        enemies[j].transform.position = newPosition;
-                        enemies[j].transform.rotation = Quaternion.Euler(0F, levelData.enemyRotation[i], 0F);
-                    }
+                    float[] newPos = new float[2] { UnityEngine.Random.Range(-6f, 7f), UnityEngine.Random.Range(-3f, 2.5f) };
+                    itemPositions.Add(newPos);
+                }
+                else
+                {
+                    itemPositions.Add(pos);
                 }
             }
 
-            for (int i = 0; i < itemNames.Count; ++i)
-            {
-                for (int j = 0; j < items.Count; j++)
-                {
-                    if (items[j].item.name == itemNames[i])
-                    {
-                        Debug.Log(items[j].item.name);
-                        Vector2 newPosition = new Vector2(itemPositions[i][0], itemPositions[i][1]);
-                        items[j].transform.position = newPosition;
-                        items.RemoveAt(j);
-                        itemNames.RemoveAt(i);
-                        itemPositions.RemoveAt(i);
-                        break;
-                    }
-                }
-            }
             for (int i = 0; i < itemNames.Count; ++i)
             {
                 GameObject pref = ItemPrefHandler.instance.FindPrefByName(itemNames[i]);
                 Instantiate(pref, new Vector2(itemPositions[i][0], itemPositions[i][1]), transform.rotation);
             }
-            foreach (var item in items)
+
+            enemyPositions = new List<float[]>();
+            foreach (var pos in levelData.enemyPositions)
             {
-                item.Destroy();
+                if (pos[0] == 1000f)
+                {
+                    float[] newPos = new float[2] { UnityEngine.Random.Range(-6f, 7f), UnityEngine.Random.Range(-3f, 2.5f) };
+                    enemyPositions.Add(newPos);
+                }
+                else
+                {
+                    enemyPositions.Add(pos);
+                }
+            }
+
+            enemyState = new List<bool>();
+
+            for(int i = 0; i < levelData.isEnabled.Length; ++i)
+            {
+                enemyState.Add(levelData.isEnabled[i]);
+            }
+
+            for (int i = 0; i < levelData.enemyNames.Length; ++i)
+            {
+                GameObject pref = ItemPrefHandler.instance.FindEnemyPrefByName(levelData.enemyNames[i].Replace("(Clone)","").Trim());
+                Instantiate(pref, new Vector2(enemyPositions[i][0], enemyPositions[i][1]), transform.rotation);
+            }
+
+        }
+
+        enemies = GameObject.FindObjectsOfType<Enemy>();
+        if(enemyState != null)
+        {
+            for(int i = 0; i < enemyState.Count; ++i)
+            {
+                if (!enemyState[i])
+                {
+                    enemies[i].SetMaxHealth(-100f);
+                }
             }
         }
     }

@@ -25,6 +25,11 @@ public class MainMenu : MonoBehaviour {
         }
     }
 
+    public void PlayRandomGen()
+    {
+        SceneManager.LoadScene("RandomGeneratedLevelStart");
+    }
+
     public void BackToMain()
     {
         SaveContent();

@@ -22,6 +22,7 @@ public class Player : Entity
     public PolygonCollider2D limits;
     private float maximumOrtographicSize;
     public float pickupRadius = 0.5f;
+    public int currentLevel = 0;
 
     void Start()
     {
