@@ -21,7 +21,7 @@ public class RandomMapLevelController : MonoBehaviour
         Debug.Log("Started");
         player = GameObject.FindObjectOfType<Player>();
         _doors = GameObject.FindGameObjectsWithTag("Door");
-        playerData = SaveSystem.LoadPlayerData();
+        playerData = SaveSystem.LoadPlayerData("Random");
 
         if (playerData != null)
         {

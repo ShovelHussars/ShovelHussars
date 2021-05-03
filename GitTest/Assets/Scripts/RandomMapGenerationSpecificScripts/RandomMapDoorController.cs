@@ -41,7 +41,7 @@ public class RandomMapDoorController : MonoBehaviour
             if (y == LengthOfRandomRun.instance.lengthOfRandomRun - 1)
             {
                 string path = Application.persistentDataPath;
-                File.Delete(path + "/Player.lvl");
+                File.Delete(path + "/RandomPlayer.lvl");
                 for (int i = 0; i < LengthOfRandomRun.instance.lengthOfRandomRun; i++)
                 {
                     File.Delete(path + "/" + i + ".lvl");
@@ -51,14 +51,14 @@ public class RandomMapDoorController : MonoBehaviour
             else
             {
                 PlayerData playerData = new PlayerData(GameObject.FindObjectOfType<Player>(), true, ++y);
-                SaveSystem.SavePlayerData(playerData);
+                SaveSystem.SavePlayerData(playerData, "Random");
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
         else
         {
             PlayerData playerData = new PlayerData(GameObject.FindObjectOfType<Player>(), false, --y);
-            SaveSystem.SavePlayerData(playerData);
+            SaveSystem.SavePlayerData(playerData, "Random");
             Debug.Log("About to load prev Scene");
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }

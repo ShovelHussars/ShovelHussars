@@ -26,73 +26,73 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/RandomGeneratedMap/RandomScene1.unity
     guid: c73361500b3fdc948b936fb1172b3689
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/RandomGeneratedMap/RandomScene2.unity
-    guid: 3fd4d149ba6c16445a4932580f642e5f
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/RandomGeneratedMap/RandomScene3.unity
-    guid: cede48b2aa8ca934b8dfed322bd12059
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/RandomGeneratedMap/RandomScene4.unity
-    guid: ac259f61a2800854fb9450e477eca723
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/RandomGeneratedMap/RandomScene5.unity
-    guid: e93957775ebe34b45ad0a43025c368f8
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/RandomGeneratedMap/RandomScene6.unity
-    guid: 49ed66ef18df4a445824ee99a80203f7
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/RandomGeneratedMap/RandomScene7.unity
-    guid: f5a9c3f5ef19e404fbf155527230c39a
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/RandomGeneratedMap/RandomScene8.unity
-    guid: 8ee5e1ef3a2291d43ab271fdec363cc9
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/RandomGeneratedMap/RandomScene9.unity
-    guid: 1d7f31648056c2a40919a882194d5ef0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/RandomGeneratedMap/RandomScene10.unity
-    guid: f1ca5edfafe8b77419a0345c8b20065e
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/RandomGeneratedMap/RandomScene11.unity
-    guid: 33ffb8881c325bc449755a7e768fd22a
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/RandomGeneratedMap/RandomScene12.unity
-    guid: 97a316ee083cfe14cbd6bbd4687dd583
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/RandomGeneratedMap/RandomScene13.unity
-    guid: ba829b08e4bafd64dba0ad6aa2280558
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/RandomGeneratedMap/RandomScene14.unity
-    guid: 5ab2c7cc88cca7d4fbdd166727bf8f24
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/RandomGeneratedMap/RandomScene15.unity
-    guid: 187887dd64bdc3b45b177378415a8f7f
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/RandomGeneratedMap/RandomScene16.unity
-    guid: 69a703d600620b0418d2720181816d65
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/RandomGeneratedMap/RandomScene17.unity
-    guid: 522ffee93f9c0de4bad8c6cffca280d2
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/RandomGeneratedMap/RandomScene18.unity
-    guid: f8f3d273490736341b68b4142c3e359c
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/RandomGeneratedMap/RandomScene19.unity
-    guid: 41ff2fac5f186bc45a01c3b10c3ef7f8
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/RandomGeneratedMap/RandomScene20.unity
-    guid: ba74f1cc27d6399469e5e5c07f320dd4
-  - enabled: 1
-    path: Assets/Scenes/RandomGeneratedMap/RandomScene21.unity
-    guid: 57719d6927dadbf41ba115e3d02a7d5e
-  - enabled: 1
-    path: Assets/Scenes/RandomGeneratedMap/RandomScene22.unity
-    guid: 335f99cf38f993b46b196564f72331dc
-  - enabled: 1
-    path: Assets/Scenes/RandomGeneratedMap/RandomScene23.unity
-    guid: 821ad3ef2efefce4aac0201507dfa361
-  - enabled: 1
-    path: Assets/Scenes/RandomGeneratedMap/RandomScene24.unity
-    guid: b1c833cd7c1171143bf22d8b20105970
+    path: 
+    guid: 00000000000000000000000000000000
   m_configObjects: {}

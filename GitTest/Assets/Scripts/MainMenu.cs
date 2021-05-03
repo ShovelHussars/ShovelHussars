@@ -1,28 +1,44 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour {
 
     PlayerData playerData;
+    PlayerData randomPlayerData;
 
     void Start()
     {
         playerData = SaveSystem.LoadPlayerData();
+        randomPlayerData = SaveSystem.LoadPlayerData("Random");
     }
 
-    public void PlayGame()
+    public void ContinueRandomGame()
     {
-        if (playerData.sceneIndex < 5)
+        if (File.Exists(Application.persistentDataPath + "/RandomPlayer.lvl"))
         {
-            SceneManager.LoadScene("TutorialLevel(" + playerData.sceneIndex + ")");
+            SceneManager.LoadScene("RandomScene1");
         }
-        else
+        
+    }
+
+    public void PlayTutorial()
+    {
+        for(int i = 1; i < 6; ++i)
         {
-            SceneManager.LoadScene(1);
+            try
+            {
+                File.Delete("TutorialLevel(" + i + ")");
+            }
+            catch (Exception)
+            {
+
+            }
         }
+        SceneManager.LoadScene("TutorialLevel(1)");
     }
 
     public void PlayRandomGen()
@@ -36,11 +52,11 @@ public class MainMenu : MonoBehaviour {
         SceneManager.LoadScene("MainMenu");
     }
 
-    public void QuitGame()
+    public void QuitGame(string gameType = "")
     {
         try
         {
-            SaveContent();
+            SaveContent(gameType);
         }
         catch (Exception)
         {
@@ -50,7 +66,7 @@ public class MainMenu : MonoBehaviour {
         Application.Quit();
     }
 
-    private void SaveContent()
+    private void SaveContent(string gameType = "")
     {
         int y = SceneManager.GetActiveScene().buildIndex;
 
@@ -58,8 +74,17 @@ public class MainMenu : MonoBehaviour {
         ItemPickup[] items = GameObject.FindObjectsOfType<ItemPickup>();
         LevelData levelData = new LevelData(enemies, items);
         SaveSystem.SaveLevelData(SceneManager.GetActiveScene().name, levelData);
-
-        PlayerData playerData = new PlayerData(GameObject.FindObjectOfType<Player>(), true, y);
-        SaveSystem.SavePlayerData(playerData);
+        PlayerData player;
+        if (gameType == "Random")
+        {
+            player = new PlayerData(GameObject.FindObjectOfType<Player>(), true, GameObject.FindObjectOfType<Player>().currentLevel);
+            SaveSystem.SavePlayerData(player, gameType);
+        }
+        else
+        {
+            player = new PlayerData(GameObject.FindObjectOfType<Player>(), true, y);
+            SaveSystem.SavePlayerData(player, gameType);
+        }
+        
     }
 }

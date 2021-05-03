@@ -30,24 +30,24 @@ public static class SaveSystem
         }
         else
         {
-            Debug.Log("No such save yet.");
+            Debug.Log("No Level save yet.");
             return null;
         }
     }
 
-    public static void SavePlayerData(PlayerData data)
+    public static void SavePlayerData(PlayerData data, string gameType = "")
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/Player.lvl";
+        string path = Application.persistentDataPath + "/"+gameType+"Player.lvl";
         FileStream stream = new FileStream(path, FileMode.Create);
 
         formatter.Serialize(stream, data);
         stream.Close();
     }
 
-    public static PlayerData LoadPlayerData()
+    public static PlayerData LoadPlayerData(string gameType = "")
     {
-        string path = Application.persistentDataPath + "/Player.lvl";
+        string path = Application.persistentDataPath + "/"+gameType+"Player.lvl";
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();
@@ -60,7 +60,7 @@ public static class SaveSystem
         }
         else
         {
-            Debug.Log("No such save yet.");
+            Debug.Log("No Player save yet.");
             return null;
         }
     }

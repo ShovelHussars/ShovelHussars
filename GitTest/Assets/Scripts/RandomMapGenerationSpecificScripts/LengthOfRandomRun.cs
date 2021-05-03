@@ -36,8 +36,18 @@ public class LengthOfRandomRun: MonoBehaviour
     {
         while (input.Length != 0)
         {
+            if(input.Length > 3)
+            {
+                input = input.Remove(3);
+                inputBox.GetComponent<TMP_InputField>().text = input;
+            }
             try
             {
+                if (input.StartsWith("0"))
+                {
+                    input = input.Replace("0", "1");
+                    inputBox.GetComponent<TMP_InputField>().text = input;
+                }
                 int a = Int32.Parse(input);
                 return;
             }
