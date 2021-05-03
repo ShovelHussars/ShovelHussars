@@ -39,7 +39,7 @@ public class DoorController : MonoBehaviour
 
         if (nextLevel)
         {
-            if (SceneManager.sceneCountInBuildSettings - 1 == y)
+            if (SceneManager.sceneCountInBuildSettings - 3 == y)
             {
                 string path = Application.persistentDataPath;
                 File.Delete(path + "/Player.lvl");

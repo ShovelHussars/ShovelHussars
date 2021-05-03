@@ -31,7 +31,7 @@ public class MainMenu : MonoBehaviour {
         {
             try
             {
-                File.Delete("TutorialLevel(" + i + ")");
+                File.Delete(Application.persistentDataPath+"/TutorialLevel(" + i + ").lvl");
             }
             catch (Exception)
             {
@@ -46,9 +46,9 @@ public class MainMenu : MonoBehaviour {
         SceneManager.LoadScene("RandomGeneratedLevelStart");
     }
 
-    public void BackToMain()
+    public void BackToMain(string gameType = "")
     {
-        SaveContent();
+        SaveContent(gameType);
         SceneManager.LoadScene("MainMenu");
     }
 
@@ -73,16 +73,18 @@ public class MainMenu : MonoBehaviour {
         Enemy[] enemies = GameObject.FindObjectsOfType<Enemy>();
         ItemPickup[] items = GameObject.FindObjectsOfType<ItemPickup>();
         LevelData levelData = new LevelData(enemies, items);
-        SaveSystem.SaveLevelData(SceneManager.GetActiveScene().name, levelData);
+        
         PlayerData player;
         if (gameType == "Random")
         {
             player = new PlayerData(GameObject.FindObjectOfType<Player>(), true, GameObject.FindObjectOfType<Player>().currentLevel);
+            SaveSystem.SaveLevelData(GameObject.FindObjectOfType<Player>().currentLevel.ToString(), levelData);
             SaveSystem.SavePlayerData(player, gameType);
         }
         else
         {
             player = new PlayerData(GameObject.FindObjectOfType<Player>(), true, y);
+            SaveSystem.SaveLevelData(SceneManager.GetActiveScene().name, levelData);
             SaveSystem.SavePlayerData(player, gameType);
         }
         
