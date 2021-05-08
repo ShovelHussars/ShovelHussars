@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -35,32 +36,38 @@ public class RandomMapDoorController : MonoBehaviour
         LevelData levelData = new LevelData(enemies, items);
         SaveSystem.SaveLevelData(y.ToString(), levelData);
 
-
-        if (nextLevel)
+        try
         {
-            if (y == LengthOfRandomRun.instance.lengthOfRandomRun - 1)
+            if (nextLevel)
             {
-                string path = Application.persistentDataPath;
-                File.Delete(path + "/RandomPlayer.lvl");
-                for (int i = 0; i < LengthOfRandomRun.instance.lengthOfRandomRun; i++)
+                if (y == LengthOfRandomRun.instance.lengthOfRandomRun - 1)
                 {
-                    File.Delete(path + "/" + i + ".lvl");
+                    string path = Application.persistentDataPath;
+                    File.Delete(path + "/RandomPlayer.lvl");
+                    for (int i = 0; i < LengthOfRandomRun.instance.lengthOfRandomRun; i++)
+                    {
+                        File.Delete(path + "/" + i + ".lvl");
+                    }
+                    SceneManager.LoadScene(0);
                 }
-                SceneManager.LoadScene(0);
+                else
+                {
+                    PlayerData playerData = new PlayerData(GameObject.FindObjectOfType<Player>(), true, ++y);
+                    SaveSystem.SavePlayerData(playerData, "Random");
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                }
             }
             else
             {
-                PlayerData playerData = new PlayerData(GameObject.FindObjectOfType<Player>(), true, ++y);
+                PlayerData playerData = new PlayerData(GameObject.FindObjectOfType<Player>(), false, --y);
                 SaveSystem.SavePlayerData(playerData, "Random");
+                Debug.Log("About to load prev Scene");
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
-        else
+        catch (Exception)
         {
-            PlayerData playerData = new PlayerData(GameObject.FindObjectOfType<Player>(), false, --y);
-            SaveSystem.SavePlayerData(playerData, "Random");
-            Debug.Log("About to load prev Scene");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
         }
     }
 }

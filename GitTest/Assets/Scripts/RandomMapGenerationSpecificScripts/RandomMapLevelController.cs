@@ -15,6 +15,7 @@ public class RandomMapLevelController : MonoBehaviour
     LevelData levelData;
     PlayerData playerData;
     Player player;
+    private bool firstUpdate = true;
 
     void Start()
     {
@@ -53,60 +54,66 @@ public class RandomMapLevelController : MonoBehaviour
 
         if (levelData != null)
         {
-            itemNames = new List<string>();
-            foreach (var item in levelData.itemNames)
+            try
             {
-                itemNames.Add(item);
-
-            }
-
-            itemPositions = new List<float[]>();
-            foreach (var pos in levelData.itemPositions)
-            {
-                if (pos[0] == 1000f)
+                itemNames = new List<string>();
+                foreach (var item in levelData.itemNames)
                 {
-                    float[] newPos = new float[2] { UnityEngine.Random.Range(-6f, 7f), UnityEngine.Random.Range(-3f, 2.5f) };
-                    itemPositions.Add(newPos);
+                    itemNames.Add(item);
+
                 }
-                else
+
+                itemPositions = new List<float[]>();
+                foreach (var pos in levelData.itemPositions)
                 {
-                    itemPositions.Add(pos);
+                    if (pos[0] == 1000f)
+                    {
+                        float[] newPos = new float[2] { UnityEngine.Random.Range(-6f, 7f), UnityEngine.Random.Range(-3f, 2.5f) };
+                        itemPositions.Add(newPos);
+                    }
+                    else
+                    {
+                        itemPositions.Add(pos);
+                    }
                 }
-            }
 
-            for (int i = 0; i < itemNames.Count; ++i)
-            {
-                GameObject pref = ItemPrefHandler.instance.FindPrefByName(itemNames[i]);
-                Instantiate(pref, new Vector2(itemPositions[i][0], itemPositions[i][1]), transform.rotation);
-            }
-
-            enemyPositions = new List<float[]>();
-            foreach (var pos in levelData.enemyPositions)
-            {
-                if (pos[0] == 1000f)
+                for (int i = 0; i < itemNames.Count; ++i)
                 {
-                    float[] newPos = new float[2] { UnityEngine.Random.Range(-6f, 7f), UnityEngine.Random.Range(-3f, 2.5f) };
-                    enemyPositions.Add(newPos);
+                    GameObject pref = ItemPrefHandler.instance.FindPrefByName(itemNames[i]);
+                    Instantiate(pref, new Vector2(itemPositions[i][0], itemPositions[i][1]), transform.rotation);
                 }
-                else
+
+                enemyPositions = new List<float[]>();
+                foreach (var pos in levelData.enemyPositions)
                 {
-                    enemyPositions.Add(pos);
+                    if (pos[0] == 1000f)
+                    {
+                        float[] newPos = new float[2] { UnityEngine.Random.Range(-6f, 7f), UnityEngine.Random.Range(-3f, 2.5f) };
+                        enemyPositions.Add(newPos);
+                    }
+                    else
+                    {
+                        enemyPositions.Add(pos);
+                    }
+                }
+
+                enemyState = new List<bool>();
+
+                for (int i = 0; i < levelData.isEnabled.Length; ++i)
+                {
+                    enemyState.Add(levelData.isEnabled[i]);
+                }
+
+                for (int i = 0; i < levelData.enemyNames.Length; ++i)
+                {
+                    GameObject pref = ItemPrefHandler.instance.FindEnemyPrefByName(levelData.enemyNames[i].Replace("(Clone)", "").Trim());
+                    Instantiate(pref, new Vector2(enemyPositions[i][0], enemyPositions[i][1]), transform.rotation);
                 }
             }
-
-            enemyState = new List<bool>();
-
-            for(int i = 0; i < levelData.isEnabled.Length; ++i)
+            catch (Exception)
             {
-                enemyState.Add(levelData.isEnabled[i]);
-            }
 
-            for (int i = 0; i < levelData.enemyNames.Length; ++i)
-            {
-                GameObject pref = ItemPrefHandler.instance.FindEnemyPrefByName(levelData.enemyNames[i].Replace("(Clone)","").Trim());
-                Instantiate(pref, new Vector2(enemyPositions[i][0], enemyPositions[i][1]), transform.rotation);
             }
-
         }
 
         enemies = GameObject.FindObjectsOfType<Enemy>();
@@ -120,10 +127,16 @@ public class RandomMapLevelController : MonoBehaviour
                 }
             }
         }
+        
     }
 
     void Update()
     {
+        if (firstUpdate)
+        {
+            Inventory.instance.OnItemChangedCallback.Invoke();
+            firstUpdate = false;
+        }
         if (EnemiesAreAllDead())
         {
             OpenAllDoors();

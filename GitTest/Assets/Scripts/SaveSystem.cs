@@ -7,12 +7,19 @@ public static class SaveSystem
 {
     public static void SaveLevelData(string sceneName, LevelData data)
     {
-        BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath+"/"+sceneName+".lvl";
-        FileStream stream = new FileStream(path, FileMode.Create);
+        try
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            string path = Application.persistentDataPath + "/" + sceneName + ".lvl";
+            FileStream stream = new FileStream(path, FileMode.Create);
 
-        formatter.Serialize(stream, data);
-        stream.Close();
+            formatter.Serialize(stream, data);
+            stream.Close();
+        }
+        catch (Exception)
+        {
+
+        }
     }
 
     public static LevelData LoadLevelData(string sceneName)

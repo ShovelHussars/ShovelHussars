@@ -26,6 +26,13 @@ public class InventoryUI : MonoBehaviour
         {
             inventoryUI.SetActive(!inventoryUI.activeSelf);
         }
+        if(Input.GetKey(KeyCode.W)||
+            Input.GetKey(KeyCode.A)||
+            Input.GetKey(KeyCode.S)||
+            Input.GetKey(KeyCode.D))
+        {
+            inventoryUI.SetActive(false);
+        }
     }
 
     void UpdateUI()

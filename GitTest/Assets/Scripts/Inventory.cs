@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class Inventory: MonoBehaviour {
@@ -34,19 +35,24 @@ public class Inventory: MonoBehaviour {
             return false;
         }
         items.Add(item);
-        while (true)
+        try
         {
-            try
-            {
-                OnItemChangedCallback.Invoke();
-                break;
-            }
-            catch (Exception)
-            {
-                Debug.Log("I tried");
-            }
+            StartCoroutine(Coroutine());
+            
+            OnItemChangedCallback.Invoke();
+            Debug.Log("Success!");
         }
+        catch (Exception)
+        {
+            Debug.Log("Failed");
+        }
+
         return true;
+    }
+
+    private IEnumerator Coroutine()
+    {
+        yield return new WaitForSecondsRealtime(0.1f);
     }
 
     public void Remove(Item item)
