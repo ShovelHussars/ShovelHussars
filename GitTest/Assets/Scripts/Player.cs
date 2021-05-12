@@ -10,6 +10,7 @@ public class Player : Entity
     public GameObject deathScreen;
     public GameObject captureScreen;
     public Slider slider;
+    public Slider healthSlider;
     private Animator anim;
     public Transform attackPoint;
     public Vector2 attackRange;
@@ -69,7 +70,9 @@ public class Player : Entity
             Die();
         }
 
-        if(Input.GetAxisRaw("Mouse ScrollWheel") < 0)
+        healthSlider.value = currentHealth;
+
+        if (Input.GetAxisRaw("Mouse ScrollWheel") < 0)
         {
             if(virtualCamera.m_Lens.OrthographicSize < maximumOrtographicSize-0.05)
                 virtualCamera.m_Lens.OrthographicSize += 0.05f;
