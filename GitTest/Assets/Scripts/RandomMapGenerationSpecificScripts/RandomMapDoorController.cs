@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class RandomMapDoorController : MonoBehaviour
 {
     [SerializeField] bool nextLevel;
+    public GameObject stopMessage;
     Player player;
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -15,6 +16,11 @@ public class RandomMapDoorController : MonoBehaviour
         {
             GoToNextLevel();
         }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        stopMessage.SetActive(false);
     }
 
     private bool CollidedWitPlayer(Collision2D collision)
@@ -59,10 +65,17 @@ public class RandomMapDoorController : MonoBehaviour
             }
             else
             {
-                PlayerData playerData = new PlayerData(GameObject.FindObjectOfType<Player>(), false, --y);
-                SaveSystem.SavePlayerData(playerData, "Random");
-                Debug.Log("About to load prev Scene");
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                if (y != 0)
+                {
+                    PlayerData playerData = new PlayerData(GameObject.FindObjectOfType<Player>(), false, --y);
+                    SaveSystem.SavePlayerData(playerData, "Random");
+                    Debug.Log("About to load prev Scene");
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                }
+                else
+                {
+                    stopMessage.SetActive(true);
+                }
             }
         }
         catch (Exception)
