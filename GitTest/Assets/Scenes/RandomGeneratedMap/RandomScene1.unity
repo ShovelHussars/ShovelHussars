@@ -206,6 +206,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2671311599451605128, guid: 8501798874681ae4da685fa1a2d66c48, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.9228
+      objectReference: {fileID: 0}
+    - target: {fileID: 2671311599451605128, guid: 8501798874681ae4da685fa1a2d66c48, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 7.5184
+      objectReference: {fileID: 0}
+    - target: {fileID: 2671311599451605131, guid: 8501798874681ae4da685fa1a2d66c48, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2671311599499422130, guid: 8501798874681ae4da685fa1a2d66c48, type: 3}
       propertyPath: m_Name
       value: LevelBounds2Doors
@@ -253,6 +265,26 @@ PrefabInstance:
     - target: {fileID: 2671311599499422133, guid: 8501798874681ae4da685fa1a2d66c48, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2671311599828135632, guid: 8501798874681ae4da685fa1a2d66c48, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2671311600198706894, guid: 8501798874681ae4da685fa1a2d66c48, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2671311600542112410, guid: 8501798874681ae4da685fa1a2d66c48, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 4.230426
+      objectReference: {fileID: 0}
+    - target: {fileID: 2671311600542112410, guid: 8501798874681ae4da685fa1a2d66c48, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.0054
+      objectReference: {fileID: 0}
+    - target: {fileID: 2671311600542112413, guid: 8501798874681ae4da685fa1a2d66c48, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2671311599451605133, guid: 8501798874681ae4da685fa1a2d66c48, type: 3}
