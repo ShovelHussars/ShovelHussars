@@ -27,7 +27,7 @@ public class Player : Entity
 
     void Start()
     {
-        
+        currentHealth = maxHealth;
         float wide;
         float high;
         if((wide = limits.bounds.size.x*Screen.currentResolution.height/Screen.currentResolution.width/2) > (high=limits.bounds.size.y / 2))
@@ -41,7 +41,7 @@ public class Player : Entity
         
         virtualCamera = mainCamera.GetComponent<CinemachineBrain>().ActiveVirtualCamera as CinemachineVirtualCamera;
         anim = GetComponent<Animator>();
-        currentHealth = maxHealth;
+        
         currentCaptureLevel = defaultCaptureLevel;
         isInfected = false;
     }

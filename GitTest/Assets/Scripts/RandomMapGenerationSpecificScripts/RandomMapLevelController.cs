@@ -27,7 +27,6 @@ public class RandomMapLevelController : MonoBehaviour
         if (playerData != null)
         {
             player.currentLevel = playerData.sceneIndex;
-            player.SetCurrentHealth(playerData.health);
             if (playerData.isInfected)
             {
                 player.Infect();
@@ -135,6 +134,8 @@ public class RandomMapLevelController : MonoBehaviour
         if (firstUpdate)
         {
             Inventory.instance.OnItemChangedCallback.Invoke();
+            if (playerData != null)
+                player.SetCurrentHealth(playerData.health);
             firstUpdate = false;
         }
         if (EnemiesAreAllDead())
