@@ -33,13 +33,13 @@ public class DoorController : MonoBehaviour
         
         Enemy[] enemies = GameObject.FindObjectsOfType<Enemy>();
         ItemPickup[] items = GameObject.FindObjectsOfType<ItemPickup>();
-        LevelData levelData = new LevelData(SceneManager.GetActiveScene().name, enemies, items);
+        LevelData levelData = new LevelData(enemies, items);
         SaveSystem.SaveLevelData(SceneManager.GetActiveScene().name, levelData);
 
 
         if (nextLevel)
         {
-            if (SceneManager.sceneCountInBuildSettings - 1 == y)
+            if (SceneManager.sceneCountInBuildSettings - 3 == y)
             {
                 string path = Application.persistentDataPath;
                 File.Delete(path + "/Player.lvl");
@@ -51,14 +51,14 @@ public class DoorController : MonoBehaviour
             }
             else
             {
-                PlayerData playerData = new PlayerData(GameObject.FindObjectOfType<Player>(), true);
+                PlayerData playerData = new PlayerData(GameObject.FindObjectOfType<Player>(), true, 0);
                 SaveSystem.SavePlayerData(playerData);
                 SceneManager.LoadScene(y + 1);
             }
         }
         else
         {
-            PlayerData playerData = new PlayerData(GameObject.FindObjectOfType<Player>(), false);
+            PlayerData playerData = new PlayerData(GameObject.FindObjectOfType<Player>(), false, 0);
             SaveSystem.SavePlayerData(playerData);
             Debug.Log("About to load prev Scene");
             SceneManager.LoadScene(y - 1);

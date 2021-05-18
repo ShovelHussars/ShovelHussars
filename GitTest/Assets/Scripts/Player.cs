@@ -10,6 +10,7 @@ public class Player : Entity
     public GameObject deathScreen;
     public GameObject captureScreen;
     public Slider slider;
+    public Slider healthSlider;
     private Animator anim;
     public Transform attackPoint;
     public Vector2 attackRange;
@@ -22,10 +23,11 @@ public class Player : Entity
     public PolygonCollider2D limits;
     private float maximumOrtographicSize;
     public float pickupRadius = 0.5f;
+    public int currentLevel = 0;
 
     void Start()
     {
-        
+        currentHealth = maxHealth;
         float wide;
         float high;
         if((wide = limits.bounds.size.x*Screen.currentResolution.height/Screen.currentResolution.width/2) > (high=limits.bounds.size.y / 2))
@@ -39,7 +41,7 @@ public class Player : Entity
         
         virtualCamera = mainCamera.GetComponent<CinemachineBrain>().ActiveVirtualCamera as CinemachineVirtualCamera;
         anim = GetComponent<Animator>();
-        currentHealth = maxHealth;
+        
         currentCaptureLevel = defaultCaptureLevel;
         isInfected = false;
     }
@@ -68,7 +70,9 @@ public class Player : Entity
             Die();
         }
 
-        if(Input.GetAxisRaw("Mouse ScrollWheel") < 0)
+        healthSlider.value = currentHealth;
+
+        if (Input.GetAxisRaw("Mouse ScrollWheel") < 0)
         {
             if(virtualCamera.m_Lens.OrthographicSize < maximumOrtographicSize-0.05)
                 virtualCamera.m_Lens.OrthographicSize += 0.05f;

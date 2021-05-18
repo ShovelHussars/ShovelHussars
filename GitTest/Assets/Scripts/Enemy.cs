@@ -104,7 +104,7 @@ public abstract class Enemy : Entity
             anim.SetBool("isWalking", true);
             transform.rotation = Quaternion.Euler(0F, 0F, 0F);
         }
-        else
+        else if(distanceX < 0)
         {
             if ((distanceX > 0 && distanceY < 0) || (distanceX < 0 && distanceY > 0))
             {
@@ -118,6 +118,11 @@ public abstract class Enemy : Entity
             }
             anim.SetBool("isWalking", true);
             transform.rotation = Quaternion.Euler(0F, 180F, 0F);
+        }
+        else
+        {
+            directionOfTarget.x = UnityEngine.Random.Range(-speed, speed);
+            directionOfTarget.y = UnityEngine.Random.Range(-speed, speed);
         }
         return directionOfTarget;
     }

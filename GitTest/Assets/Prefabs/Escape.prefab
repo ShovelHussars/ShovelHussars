@@ -1521,7 +1521,7 @@ GameObject:
   - component: {fileID: 3109759518215090454}
   - component: {fileID: 3109759518215090455}
   m_Layer: 5
-  m_Name: FeedbackButton
+  m_Name: MainMenuButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1632,7 +1632,7 @@ MonoBehaviour:
       - m_Target: {fileID: 3109759517744518297}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: BackToMain
-        m_Mode: 1
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2369,7 +2369,7 @@ MonoBehaviour:
       - m_Target: {fileID: 3109759517744518297}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: QuitGame
-        m_Mode: 1
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

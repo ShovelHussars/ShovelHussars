@@ -20,7 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TutorialLevel(4).unity
     guid: a3be0a59a72b8d741b38a367da3ee416
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/RandomGeneratedMap/RandomGeneratedLevelStart.unity
+    guid: db48a4832add9ad43a81e8b9a977ba45
+  - enabled: 1
+    path: Assets/Scenes/RandomGeneratedMap/RandomScene1.unity
+    guid: c73361500b3fdc948b936fb1172b3689
   m_configObjects: {}

@@ -36,7 +36,7 @@ public class SCP_012 : MonoBehaviour
                     entityLayers);
         foreach (var entity in nearEntities)
         {
-            if (!transform.position.Equals(entity.transform.position) && entity.enabled)
+            if (!transform.position.Equals(entity.transform.position) && entity.GetComponent<Entity>().enabled)
             {
                 float distance = Vector2.Distance(transform.position, entity.transform.position);
                 entity.transform.position = Vector2.MoveTowards(
